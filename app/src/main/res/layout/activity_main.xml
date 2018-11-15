@@ -45,12 +45,13 @@
         android:inputType="textPassword"/>
 
     <Button
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="LOGIN"
         android:layout_marginTop="20dp"
-        android:background="@color/colorPrimary"
+        style="@style/AppTheme.RoundedCornerMaterialButton"
         />
 
 </LinearLayout>

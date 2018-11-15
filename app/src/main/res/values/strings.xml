@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MyWaiter</string>
+    <string name="title_activity_scan">ScanActivity</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_scan">Scan</string>
+    <string name="title_settings">Settings</string>
+    <string name="content_scan">Start scanning your QR</string>
 </resources>
