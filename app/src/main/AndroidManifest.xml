@@ -20,9 +20,10 @@
             android:name=".ScanActivity"
             android:label="@string/title_activity_scan" />
         <activity
-            android:name=".RestaurantActivity"
+            android:name=".RestaurantActivityCollapsable"
             android:label="@string/title_activity_restaurant"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".RestaurantActivity"></activity>
     </application>
 
 </manifest>
