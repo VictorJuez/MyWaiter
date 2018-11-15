@@ -13,4 +13,59 @@
         android:src="@drawable/dos_cuiners"
         android:layout_gravity="center_horizontal"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:background="#FFF"
+        android:elevation="4dp"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AppTheme.RoundedCornerMaterialButton"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="Vegan"
+            android:padding="10dp"
+            />
+
+        <TextView
+            style="@style/AppTheme.RoundedCornerMaterialButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="Gluten Friendly"
+            android:padding="10dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="16dp"
+        android:background="#FFF"
+        android:elevation="4dp"
+        android:padding="50dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_description" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="@style/AppTheme.RoundedCornerMaterialButton"
+            android:layout_marginTop="15dp"
+            android:text="VER CARTA"
+
+            />
+
+    </LinearLayout>
+
 </android.support.v7.widget.LinearLayoutCompat>
