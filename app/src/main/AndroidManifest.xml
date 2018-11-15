@@ -18,7 +18,11 @@
         </activity>
         <activity
             android:name=".ScanActivity"
-            android:label="@string/title_activity_scan"></activity>
+            android:label="@string/title_activity_scan" />
+        <activity
+            android:name=".RestaurantActivity"
+            android:label="@string/title_activity_restaurant"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
