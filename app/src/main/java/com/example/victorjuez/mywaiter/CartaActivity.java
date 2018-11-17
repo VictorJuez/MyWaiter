@@ -118,7 +118,7 @@ public class CartaActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
 
-            CartaFragment carta1 = new CartaFragment(position);
+            CartaFragment carta1 = new CartaFragment();
             return carta1;
         }
 
