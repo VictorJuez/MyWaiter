@@ -11,19 +11,30 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/row_padding_vertical">
 
+    <ImageView
+        android:id="@+id/photo_plate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/plat1"/>
+
     <TextView
         android:id="@+id/nombre"
+        android:paddingLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:textColor="@color/colorPrimaryDark"
+        android:layout_toRightOf="@+id/photo_plate"
         android:textSize="16dp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/descripcion"
+        android:paddingLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/photo_plate"
         android:layout_below="@id/nombre" />
 
     <TextView
