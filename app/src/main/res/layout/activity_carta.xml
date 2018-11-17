@@ -23,7 +23,7 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/app_name">
+            app:title="@string/carta_name">
 
         </android.support.v7.widget.Toolbar>
 
@@ -66,5 +66,13 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <Button
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="CONTINUE"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"/>
 
 </android.support.design.widget.CoordinatorLayout>
