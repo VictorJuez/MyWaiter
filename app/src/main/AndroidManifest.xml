@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".View.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,8 +17,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScanActivity"
-            android:label="@string/title_activity_scan"></activity>
+            android:name=".View.ScanActivity"
+            android:label="@string/title_activity_scan" />
+        <activity
+            android:name=".View.RestaurantActivityCollapsable"
+            android:label="@string/title_activity_restaurant"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".View.RestaurantActivity" />
+        <activity
+            android:name=".View.Carta.CartaActivity"
+            android:label="@string/title_activity_carta"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
