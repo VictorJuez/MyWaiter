@@ -1,19 +1,17 @@
-package com.example.victorjuez.mywaiter;
+package com.example.victorjuez.mywaiter.View.Carta;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.victorjuez.mywaiter.Model.Plato;
+import com.example.victorjuez.mywaiter.R;
 
 import java.util.ArrayList;
 import java.util.List;

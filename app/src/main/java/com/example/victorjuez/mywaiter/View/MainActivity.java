@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter;
+package com.example.victorjuez.mywaiter.View;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.victorjuez.mywaiter.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

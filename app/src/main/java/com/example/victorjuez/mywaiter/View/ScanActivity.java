@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter;
+package com.example.victorjuez.mywaiter.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.victorjuez.mywaiter.R;
 
 public class ScanActivity extends AppCompatActivity {
 

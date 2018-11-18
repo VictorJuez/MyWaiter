@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter;
+package com.example.victorjuez.mywaiter.Model;
 
 public class Plato {
     private String nombre, descripcion, precio;
