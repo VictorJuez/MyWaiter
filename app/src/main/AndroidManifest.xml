@@ -18,7 +18,16 @@
         </activity>
         <activity
             android:name=".ScanActivity"
-            android:label="@string/title_activity_scan"></activity>
+            android:label="@string/title_activity_scan" />
+        <activity
+            android:name=".RestaurantActivityCollapsable"
+            android:label="@string/title_activity_restaurant"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".RestaurantActivity" />
+        <activity
+            android:name=".CartaActivity"
+            android:label="@string/title_activity_carta"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

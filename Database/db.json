@@ -1,0 +1,14 @@
+{
+  "Platos": {
+    "Arroz": {
+      "Nombre": "Arroz",
+      "Descripcion": "Descripcion del plato de arroz",
+      "Precio": "10€"
+    },
+    "Ensalada": {
+        "Nombre": "Ensalada",
+        "Descripcion": "Descripcion del plato de ensalada",
+        "Precio": "12€"
+      }
+  }
+}

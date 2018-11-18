@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "662701072504",
+    "firebase_url": "https://mywaiter-db3a7.firebaseio.com",
+    "project_id": "mywaiter-db3a7",
+    "storage_bucket": "mywaiter-db3a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662701072504:android:fbfc2fe212b5a5cb",
+        "android_client_info": {
+          "package_name": "com.example.victorjuez.mywaiter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662701072504-qj0g8q0g51766vdc0petm7edmbcfmm82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn_Kf3HqX6ud2sHh4OYBRWvS8fVnINUMU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
