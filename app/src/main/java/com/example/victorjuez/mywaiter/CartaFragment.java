@@ -71,6 +71,7 @@ public class CartaFragment extends Fragment {
         plato = new Plato("plato4", "descripcion4", "4€");
         platoList.add(plato);
 
+
         pAdapter.notifyDataSetChanged();
     }
 
