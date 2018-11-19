@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.Model.Plato;
 import com.example.victorjuez.mywaiter.R;
+import com.example.victorjuez.mywaiter.View.MainActivity;
+import com.example.victorjuez.mywaiter.View.PlateActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ public class CartaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_carta, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_carta, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
@@ -40,7 +43,9 @@ public class CartaFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 Plato plato = platoList.get(position);
-                Toast.makeText(getContext(),plato.getNombre() + " is selected!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),plato.getNombre() + " is selected!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), PlateActivity.class);
+                startActivity(intent);
             }
 
             @Override
