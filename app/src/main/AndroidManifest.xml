@@ -27,7 +27,13 @@
         <activity
             android:name=".View.Carta.CartaActivity"
             android:label="@string/title_activity_carta"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.victorjuez.mywaiter.View.RestaurantActivity" />
+            </activity>
+        <activity android:name=".View.PlateActivity" />
+        <activity android:name=".View.Carta.CheckoutActivity"></activity>
     </application>
 
 </manifest>
