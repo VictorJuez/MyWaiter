@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.victorjuez.mywaiter">
+    
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    
 
     <application
         android:allowBackup="true"
@@ -19,10 +24,6 @@
         <activity
             android:name=".View.ScanActivity"
             android:label="@string/title_activity_scan" />
-        <activity
-            android:name=".View.RestaurantActivityCollapsable"
-            android:label="@string/title_activity_restaurant"
-            android:theme="@style/AppTheme" />
         <activity android:name=".View.RestaurantActivity" />
         <activity
             android:name=".View.Carta.CartaActivity"
@@ -34,6 +35,8 @@
             </activity>
         <activity android:name=".View.PlateActivity" />
         <activity android:name=".View.Carta.CheckoutActivity"></activity>
+
+        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode" />
     </application>
 
 </manifest>
