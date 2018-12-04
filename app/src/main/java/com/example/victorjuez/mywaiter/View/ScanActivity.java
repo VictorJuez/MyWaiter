@@ -18,11 +18,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.*;
 
@@ -38,6 +45,8 @@ public class ScanActivity extends AppCompatActivity {
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
     final int RequestCameraPermissionID = 1001;
+
+    DatabaseReference dbRestaurants;
 
     boolean found = false;
 
@@ -169,9 +178,8 @@ public class ScanActivity extends AppCompatActivity {
                                 vibrator.vibrate(1000);
 
                                 String result = qrcodes.valueAt(0).displayValue;
-                                treatJson(result);
-
                                 //txtResult.setText(qrcodes.valueAt(0).displayValue);
+                                treatJson(result);
                             }
                         });
                     }
@@ -185,9 +193,34 @@ public class ScanActivity extends AppCompatActivity {
         try {
             obj = new JSONObject(result);
             if(obj.getJSONObject("mywaiter") != null){
-                String restaurantName = obj.getJSONObject("mywaiter").getString("name");
-                String table = obj.getJSONObject("mywaiter").getString("table");
-                txtResult.setText("Restaurant="+restaurantName+"\n"+"Table="+table);
+                final int restaurantId = obj.getJSONObject("mywaiter").getInt("id");
+                final String table = obj.getJSONObject("mywaiter").getString("table");
+                txtResult.setText("Restaurant="+restaurantId+"\n"+"Table="+table);
+                Query query = FirebaseDatabase.getInstance().getReference("Restaurants")
+                        .orderByChild("id")
+                        .equalTo(restaurantId);
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Restaurant restaurant = snapshot.getValue(Restaurant.class);
+                                txtResult.setText("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
+                                System.out.println("LMAAAAAO RESTAURANT "+ restaurant.name);
+                            }
+                        }
+                        else {
+                            System.out.println("This restaurant doesn't exists");
+                            txtResult.setText("This restaurant doesn't exists");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
 
         } catch (JSONException e) {
