@@ -24,10 +24,6 @@
         <activity
             android:name=".View.ScanActivity"
             android:label="@string/title_activity_scan" />
-        <activity
-            android:name=".View.RestaurantActivityCollapsable"
-            android:label="@string/title_activity_restaurant"
-            android:theme="@style/AppTheme" />
         <activity android:name=".View.RestaurantActivity" />
         <activity
             android:name=".View.Carta.CartaActivity"

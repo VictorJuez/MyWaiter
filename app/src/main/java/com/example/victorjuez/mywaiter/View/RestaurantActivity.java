@@ -2,6 +2,8 @@ package com.example.victorjuez.mywaiter.View;
 
 import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,11 @@ import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Carta.CartaActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -22,6 +29,8 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView restaurantEmail;
     private TextView restaurantTelephone;
     private TextView restaurantAddress;
+
+    FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +60,26 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantEmail.setText(String.valueOf(restaurantId));
         restaurantTelephone.setText(String.valueOf(restaurant.telephone));
         restaurantEmail.setText(restaurant.address);
+
+        storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(restaurantId)+"/profilePhoto.png");
+
+        restaurantImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                        .load(uri)
+                        .fit()
+                        .centerCrop()
+                        .into(restaurantProfileImage);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("failed to load image");
+            }
+        });
+
     }
 }
