@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.View;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
@@ -30,6 +32,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView restaurantTelephone;
     private TextView restaurantAddress;
     private TextView restaurantDescription;
+    private LinearLayout tagsLayout;
 
     FirebaseStorage storage;
 
@@ -53,9 +56,7 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantTelephone = findViewById(R.id.restaurantTelephone);
         restaurantAddress = findViewById(R.id.restaurantAddress);
         restaurantDescription = findViewById(R.id.restaurantDescription);
-
-        Intent intent = getIntent();
-        //restaurantId = intent.getIntExtra("restaurantId", -1);
+        tagsLayout = findViewById(R.id.tagsLayout);
 
         Restaurant restaurant = ActiveRestaurant.getInstance().getRestaurant();
         restaurantId = restaurant.id;
@@ -64,6 +65,17 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantEmail.setText(restaurant.email);
         restaurantAddress.setText(restaurant.address);
         restaurantDescription.setText(restaurant.description);
+
+        System.out.println(restaurant.tags);
+
+        /*for(String tag : restaurant.tags){
+            TextView textView = new TextView(this);
+            textView.setText(tag);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    ));
+        }*/
 
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();

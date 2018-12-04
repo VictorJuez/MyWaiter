@@ -213,8 +213,6 @@ public class ScanActivity extends AppCompatActivity {
                                 activeRestaurant.setRestaurant(restaurant);
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
-                                //intent.putExtra("restaurantId",restaurantId);
-                                //intent.putExtra("restaurantTable",table);
                                 startActivity(intent);
                             }
                         }
