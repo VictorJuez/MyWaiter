@@ -29,6 +29,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView restaurantEmail;
     private TextView restaurantTelephone;
     private TextView restaurantAddress;
+    private TextView restaurantDescription;
 
     FirebaseStorage storage;
 
@@ -51,15 +52,18 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantEmail = findViewById(R.id.restaurantEmail);
         restaurantTelephone = findViewById(R.id.restaurantTelephone);
         restaurantAddress = findViewById(R.id.restaurantAddress);
+        restaurantDescription = findViewById(R.id.restaurantDescription);
 
         Intent intent = getIntent();
         //restaurantId = intent.getIntExtra("restaurantId", -1);
 
         Restaurant restaurant = ActiveRestaurant.getInstance().getRestaurant();
         restaurantId = restaurant.id;
-        restaurantEmail.setText(String.valueOf(restaurantId));
-        restaurantTelephone.setText(String.valueOf(restaurant.telephone));
-        restaurantEmail.setText(restaurant.address);
+
+        restaurantTelephone.setText(restaurant.telephone);
+        restaurantEmail.setText(restaurant.email);
+        restaurantAddress.setText(restaurant.address);
+        restaurantDescription.setText(restaurant.description);
 
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
