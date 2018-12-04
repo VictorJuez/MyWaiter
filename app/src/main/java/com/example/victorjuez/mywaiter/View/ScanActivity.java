@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
 import com.google.android.gms.vision.CameraSource;
@@ -207,7 +208,14 @@ public class ScanActivity extends AppCompatActivity {
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Restaurant restaurant = snapshot.getValue(Restaurant.class);
                                 txtResult.setText("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
-                                System.out.println("LMAAAAAO RESTAURANT "+ restaurant.name);
+
+                                ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
+                                activeRestaurant.setRestaurant(restaurant);
+
+                                Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
+                                //intent.putExtra("restaurantId",restaurantId);
+                                //intent.putExtra("restaurantTable",table);
+                                startActivity(intent);
                             }
                         }
                         else {

@@ -1,17 +1,27 @@
 package com.example.victorjuez.mywaiter.View;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Carta.CartaActivity;
 
 public class RestaurantActivity extends AppCompatActivity {
 
     private Button verCartaButton;
+    private ImageView restaurantProfileImage;
+    private int restaurantId;
+    private TextView restaurantEmail;
+    private TextView restaurantTelephone;
+    private TextView restaurantAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +37,19 @@ public class RestaurantActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        restaurantProfileImage = findViewById(R.id.restaurantProfileImage);
+        restaurantEmail = findViewById(R.id.restaurantEmail);
+        restaurantTelephone = findViewById(R.id.restaurantTelephone);
+        restaurantAddress = findViewById(R.id.restaurantAddress);
+
+        Intent intent = getIntent();
+        //restaurantId = intent.getIntExtra("restaurantId", -1);
+
+        Restaurant restaurant = ActiveRestaurant.getInstance().getRestaurant();
+        restaurantId = restaurant.id;
+        restaurantEmail.setText(String.valueOf(restaurantId));
+        restaurantTelephone.setText(String.valueOf(restaurant.telephone));
+        restaurantEmail.setText(restaurant.address);
     }
 }
