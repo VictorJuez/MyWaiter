@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RestaurantActivity"
+    tools:context=".View.RestaurantActivity"
     android:layout_marginBottom="0dp"
     android:orientation="vertical">
 
@@ -100,6 +100,7 @@
             android:text="@string/restaurant_description" />
 
         <Button
+            android:id="@+id/verCartaButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             style="@style/AppTheme.RoundedCornerMaterialButton"
