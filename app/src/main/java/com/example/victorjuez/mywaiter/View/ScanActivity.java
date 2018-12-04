@@ -24,6 +24,8 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+import org.json.*;
+
 import java.io.IOException;
 
 public class ScanActivity extends AppCompatActivity {
@@ -165,13 +167,32 @@ public class ScanActivity extends AppCompatActivity {
                                 //create vibrate
                                 Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                                 vibrator.vibrate(1000);
-                                txtResult.setText(qrcodes.valueAt(0).displayValue);
+
+                                String result = qrcodes.valueAt(0).displayValue;
+                                treatJson(result);
+
+                                //txtResult.setText(qrcodes.valueAt(0).displayValue);
                             }
                         });
                     }
                 }
             }
         });
+    }
+
+    private void treatJson(String result){
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(result);
+            if(obj.getJSONObject("mywaiter") != null){
+                String restaurantName = obj.getJSONObject("mywaiter").getString("name");
+                String table = obj.getJSONObject("mywaiter").getString("table");
+                txtResult.setText("Restaurant="+restaurantName+"\n"+"Table="+table);
+            }
+
+        } catch (JSONException e) {
+            txtResult.setText("Non valid QR code");
+        }
     }
 
 }
