@@ -32,7 +32,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView restaurantTelephone;
     private TextView restaurantAddress;
     private TextView restaurantDescription;
-    private LinearLayout tagsLayout;
+    private TextView tag0, tag1, tag2;
 
     FirebaseStorage storage;
 
@@ -56,7 +56,9 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantTelephone = findViewById(R.id.restaurantTelephone);
         restaurantAddress = findViewById(R.id.restaurantAddress);
         restaurantDescription = findViewById(R.id.restaurantDescription);
-        tagsLayout = findViewById(R.id.tagsLayout);
+        tag0 = findViewById(R.id.tag0);
+        tag1 = findViewById(R.id.tag1);
+        tag2 = findViewById(R.id.tag2);
 
         Restaurant restaurant = ActiveRestaurant.getInstance().getRestaurant();
         restaurantId = restaurant.id;
@@ -65,17 +67,9 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantEmail.setText(restaurant.email);
         restaurantAddress.setText(restaurant.address);
         restaurantDescription.setText(restaurant.description);
-
-        System.out.println(restaurant.tags);
-
-        /*for(String tag : restaurant.tags){
-            TextView textView = new TextView(this);
-            textView.setText(tag);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    ));
-        }*/
+        tag0.setText(restaurant.tags.get(0));
+        tag1.setText(restaurant.tags.get(1));
+        tag2.setText(restaurant.tags.get(2));
 
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
