@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.View;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
@@ -30,6 +32,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView restaurantTelephone;
     private TextView restaurantAddress;
     private TextView restaurantDescription;
+    private TextView tag0, tag1, tag2;
 
     FirebaseStorage storage;
 
@@ -53,9 +56,9 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantTelephone = findViewById(R.id.restaurantTelephone);
         restaurantAddress = findViewById(R.id.restaurantAddress);
         restaurantDescription = findViewById(R.id.restaurantDescription);
-
-        Intent intent = getIntent();
-        //restaurantId = intent.getIntExtra("restaurantId", -1);
+        tag0 = findViewById(R.id.tag0);
+        tag1 = findViewById(R.id.tag1);
+        tag2 = findViewById(R.id.tag2);
 
         Restaurant restaurant = ActiveRestaurant.getInstance().getRestaurant();
         restaurantId = restaurant.id;
@@ -64,6 +67,9 @@ public class RestaurantActivity extends AppCompatActivity {
         restaurantEmail.setText(restaurant.email);
         restaurantAddress.setText(restaurant.address);
         restaurantDescription.setText(restaurant.description);
+        tag0.setText(restaurant.tags.get(0));
+        tag1.setText(restaurant.tags.get(1));
+        tag2.setText(restaurant.tags.get(2));
 
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
