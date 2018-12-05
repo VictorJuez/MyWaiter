@@ -1,10 +1,13 @@
-package com.example.victorjuez.mywaiter;
+package com.example.victorjuez.mywaiter.View.Carta;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.victorjuez.mywaiter.Model.Plato;
+import com.example.victorjuez.mywaiter.R;
 
 import java.util.List;
 

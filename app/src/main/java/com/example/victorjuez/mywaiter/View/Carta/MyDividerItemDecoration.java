@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter;
+package com.example.victorjuez.mywaiter.View.Carta;
 
 import android.content.Context;
 import android.content.res.Resources;

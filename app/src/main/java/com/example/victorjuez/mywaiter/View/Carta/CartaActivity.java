@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter;
+package com.example.victorjuez.mywaiter.View.Carta;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -12,15 +12,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.Button;
-import android.widget.TextView;
+
+import com.example.victorjuez.mywaiter.R;
+import com.example.victorjuez.mywaiter.View.MainActivity;
+import com.example.victorjuez.mywaiter.View.RestaurantActivity;
+import com.example.victorjuez.mywaiter.View.ScanActivity;
 
 public class CartaActivity extends AppCompatActivity {
 
@@ -35,6 +36,8 @@ public class CartaActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private Button toolbar;
+
+    private Button continue_btn;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -79,9 +82,17 @@ public class CartaActivity extends AppCompatActivity {
             }
         });
 
+        continue_btn = findViewById(R.id.continue_button);
+
+        continue_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartaActivity.this, CheckoutActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
