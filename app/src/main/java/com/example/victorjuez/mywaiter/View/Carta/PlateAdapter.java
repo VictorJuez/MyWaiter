@@ -6,28 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.victorjuez.mywaiter.Model.Plato;
+import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
 
 import java.util.List;
 
-public class PlatosAdapter extends RecyclerView.Adapter<PlatosAdapter.MyViewHolder> {
+public class PlateAdapter extends RecyclerView.Adapter<PlateAdapter.MyViewHolder> {
 
-    private List<Plato> platosList;
+    private List<Plate> platosList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView nombre, precio, descripcion;
 
         public MyViewHolder(View view) {
             super(view);
-            nombre = (TextView) view.findViewById(R.id.nombre);
-            descripcion = (TextView) view.findViewById(R.id.descripcion);
-            precio = (TextView) view.findViewById(R.id.precio);
+            nombre = (TextView) view.findViewById(R.id.name);
+            descripcion = (TextView) view.findViewById(R.id.description);
+            precio = (TextView) view.findViewById(R.id.price);
         }
     }
 
 
-    public PlatosAdapter(List<Plato> platosList) {
+    public PlateAdapter(List<Plate> platosList) {
         this.platosList = platosList;
     }
 
@@ -41,10 +41,10 @@ public class PlatosAdapter extends RecyclerView.Adapter<PlatosAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Plato plato = platosList.get(position);
-        holder.nombre.setText(plato.getNombre());
-        holder.descripcion.setText(plato.getDescripcion());
-        holder.precio.setText(plato.getPrecio());
+        Plate plate = platosList.get(position);
+        holder.nombre.setText(plate.name);
+        holder.descripcion.setText(plate.description);
+        holder.precio.setText(plate.price);
     }
 
     @Override

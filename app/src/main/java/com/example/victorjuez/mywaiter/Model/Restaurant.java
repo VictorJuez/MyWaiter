@@ -10,6 +10,7 @@ public class Restaurant {
     public String telephone;
     public int id;
     public ArrayList<String> tags;
+    public ArrayList<Integer> plates;
 
     public Restaurant() {
     }
