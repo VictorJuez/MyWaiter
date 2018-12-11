@@ -143,8 +143,8 @@ public class CartaActivity extends AppCompatActivity implements CartaFragment.On
     }
 
     @Override
-    public void showPlates(ArrayList<Plate> plateList) {
-        
+    public void helloWorld(String mssg) {
+        System.out.println(mssg);
     }
 
     /**

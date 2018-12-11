@@ -1,5 +1,7 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,12 +35,23 @@ import java.util.List;
 
 public class CartaFragment extends Fragment {
 
+    Activity activity;
+
     private List<Plate> plateList = new ArrayList<>();
     private PlateController plateController;
     private RecyclerView recyclerView;
     private PlateAdapter pAdapter;
     private ArrayList<Integer> platesId = new ArrayList<>();
     private int page;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity){
+            activity=(Activity) context;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +72,9 @@ public class CartaFragment extends Fragment {
             public void onClick(View view, int position) {
                 Plate plate = plateList.get(position);
                 //Toast.makeText(getContext(),plate.getName() + " is selected!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), PlateActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getActivity(), PlateActivity.class);
+                //startActivity(intent);
+                ((OnTabSelectedListener)activity).helloWorld("lel");
             }
 
             @Override
@@ -130,6 +144,6 @@ public class CartaFragment extends Fragment {
 
     public interface OnTabSelectedListener{
         void onNewTabSelected(int tab);
-        void showPlates(ArrayList<Plate> plateList);
+        void helloWorld(String mssg);
     }
 }
