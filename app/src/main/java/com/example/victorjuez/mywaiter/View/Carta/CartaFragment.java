@@ -127,4 +127,9 @@ public class CartaFragment extends Fragment {
     public void setPage(int page) {
         this.page = page;
     }
+
+    public interface OnTabSelectedListener{
+        void onNewTabSelected(int tab);
+        void showPlates(ArrayList<Plate> plateList);
+    }
 }

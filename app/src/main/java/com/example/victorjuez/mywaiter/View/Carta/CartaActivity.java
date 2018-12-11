@@ -20,12 +20,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.MainActivity;
 import com.example.victorjuez.mywaiter.View.RestaurantActivity;
 import com.example.victorjuez.mywaiter.View.ScanActivity;
 
-public class CartaActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class CartaActivity extends AppCompatActivity implements CartaFragment.OnTabSelectedListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -102,7 +105,7 @@ public class CartaActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int i) {
-                Toast.makeText(getApplicationContext(),"Cazzo "+ i, Toast.LENGTH_SHORT).show();
+                onNewTabSelected(i);
             }
 
             @Override
@@ -132,6 +135,16 @@ public class CartaActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNewTabSelected(int tab) {
+        Toast.makeText(getApplicationContext(), "Clicked "+ tab, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPlates(ArrayList<Plate> plateList) {
+        
     }
 
     /**
