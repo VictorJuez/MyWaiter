@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Controller.PlateController;
@@ -33,10 +34,11 @@ import java.util.List;
 public class CartaFragment extends Fragment {
 
     private List<Plate> plateList = new ArrayList<>();
-    private ArrayList<Plate> dbPlateList = new ArrayList<>();
     private PlateController plateController;
     private RecyclerView recyclerView;
     private PlateAdapter pAdapter;
+    private ArrayList<Integer> platesId = new ArrayList<>();
+    private int page;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,10 +87,12 @@ public class CartaFragment extends Fragment {
                 if (dataSnapshot.exists()){
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Plate plate = snapshot.getValue(Plate.class);
-                        dbPlateList.add(plate);
-                        plateList.add(plate);
+                        if(!platesId.contains(plate.id)){
+                            plateList.add(plate);
+                            platesId.add(plate.id);
+                        }
                     }
-                    plateController.setPlateList(dbPlateList);
+                    plateController.setPlateList((ArrayList<Plate>) plateList);
                     pAdapter.notifyDataSetChanged();
                 }
                 else {
@@ -101,18 +105,6 @@ public class CartaFragment extends Fragment {
 
             }
         });
-
-        /*Plate plate = new Plate("plato1", "descripcion1", "1€");
-        plateList.add(plate);
-
-        plate = new Plate("plato2", "descripcion2", "2€");
-        plateList.add(plate);
-
-        plate = new Plate("plato3", "descripcion3", "3€");
-        plateList.add(plate);
-
-        plate = new Plate("plato4", "descripcion4", "4€");
-        plateList.add(plate);*/
     }
 
     private void printPlates() {
@@ -122,5 +114,17 @@ public class CartaFragment extends Fragment {
         }
     }
 
+    public static CartaFragment newInstance(int someInt) {
+        CartaFragment myFragment = new CartaFragment();
 
+        Bundle args = new Bundle();
+        args.putInt("page", someInt);
+        myFragment.setArguments(args);
+
+        return myFragment;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
 }

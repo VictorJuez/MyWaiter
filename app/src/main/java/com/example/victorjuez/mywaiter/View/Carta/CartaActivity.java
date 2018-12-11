@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.MainActivity;
@@ -92,6 +94,23 @@ public class CartaActivity extends AppCompatActivity {
             }
         });
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                Toast.makeText(getApplicationContext(),"Cazzo "+ i, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,9 +147,21 @@ public class CartaActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
+            CartaFragment cartaFragment = new CartaFragment();
+            switch (position){
+                case 0:
+                    cartaFragment.setPage(0);
+                    return cartaFragment;
 
-            CartaFragment carta1 = new CartaFragment();
-            return carta1;
+                case 1:
+                    cartaFragment.setPage(1);
+                    return cartaFragment;
+
+                case 2:
+                    cartaFragment.setPage(2);
+                    return cartaFragment;
+            }
+            return null;
         }
 
         @Override
