@@ -33,7 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaFragment extends Fragment {
+public class CartaFragment extends Fragment implements CartaActivity.onTabSelected{
 
     Activity activity;
 
@@ -74,7 +74,6 @@ public class CartaFragment extends Fragment {
                 //Toast.makeText(getContext(),plate.getName() + " is selected!", Toast.LENGTH_SHORT).show();
                 //Intent intent = new Intent(getActivity(), PlateActivity.class);
                 //startActivity(intent);
-                ((OnTabSelectedListener)activity).helloWorld("lel");
             }
 
             @Override
@@ -84,16 +83,16 @@ public class CartaFragment extends Fragment {
         }));
 
         plateController = PlateController.getInstance();
-        preparePlatoData();
+        preparePlatoData(0);
 
         return rootView;
     }
 
-    private void preparePlatoData() {
+    private void preparePlatoData(int plateSet) {
         DatabaseReference platesReference = FirebaseDatabase.getInstance().getReference("Plates");
         Query query = platesReference
                 .orderByChild("restaurant")
-                .equalTo(1);
+                .equalTo(ActiveRestaurant.getInstance().getRestaurant().id);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -142,8 +141,13 @@ public class CartaFragment extends Fragment {
         this.page = page;
     }
 
-    public interface OnTabSelectedListener{
-        void onNewTabSelected(int tab);
-        void helloWorld(String mssg);
+    @Override
+    public void helloWorld() {
+        System.out.println("Hello world");
+    }
+
+    @Override
+    public void loadPlates(int plateSet) {
+        preparePlatoData(plateSet);
     }
 }

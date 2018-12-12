@@ -28,7 +28,7 @@ import com.example.victorjuez.mywaiter.View.ScanActivity;
 
 import java.util.ArrayList;
 
-public class CartaActivity extends AppCompatActivity implements CartaFragment.OnTabSelectedListener{
+public class CartaActivity extends AppCompatActivity{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -43,6 +43,8 @@ public class CartaActivity extends AppCompatActivity implements CartaFragment.On
     private Button toolbar;
 
     private Button continue_btn;
+
+    private onTabSelected listener;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -105,7 +107,8 @@ public class CartaActivity extends AppCompatActivity implements CartaFragment.On
 
             @Override
             public void onPageSelected(int i) {
-                onNewTabSelected(i);
+                //helloworld
+                listener.helloWorld();
             }
 
             @Override
@@ -115,6 +118,11 @@ public class CartaActivity extends AppCompatActivity implements CartaFragment.On
         });
 
     }
+
+    public void setListener(onTabSelected listener){
+        this.listener = listener;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -137,16 +145,6 @@ public class CartaActivity extends AppCompatActivity implements CartaFragment.On
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onNewTabSelected(int tab) {
-        Toast.makeText(getApplicationContext(), "Clicked "+ tab, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void helloWorld(String mssg) {
-        System.out.println(mssg);
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -161,6 +159,7 @@ public class CartaActivity extends AppCompatActivity implements CartaFragment.On
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             CartaFragment cartaFragment = new CartaFragment();
+            setListener(cartaFragment);
             switch (position){
                 case 0:
                     cartaFragment.setPage(0);
@@ -182,5 +181,10 @@ public class CartaActivity extends AppCompatActivity implements CartaFragment.On
             // Show 3 total pages.
             return 3;
         }
+    }
+
+    public interface onTabSelected{
+        void helloWorld();
+        void loadPlates(int plateSet);
     }
 }
