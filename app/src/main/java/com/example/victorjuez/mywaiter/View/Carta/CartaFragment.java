@@ -83,12 +83,12 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
         }));
 
         plateController = PlateController.getInstance();
-        preparePlatoData(0);
+        preparePlatoData();
 
         return rootView;
     }
 
-    private void preparePlatoData(int plateSet) {
+    private void preparePlatoData() {
         DatabaseReference platesReference = FirebaseDatabase.getInstance().getReference("Plates");
         Query query = platesReference
                 .orderByChild("restaurant")
@@ -143,11 +143,12 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
 
     @Override
     public void helloWorld() {
-        System.out.println("Hello world");
+        plateList.add(plateController.getPlateList().get(0));
+        pAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void loadPlates(int plateSet) {
-        preparePlatoData(plateSet);
+    public void setPlates(int plateSet) {
+        
     }
 }

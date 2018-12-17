@@ -44,7 +44,7 @@ public class CartaActivity extends AppCompatActivity{
 
     private Button continue_btn;
 
-    private onTabSelected listener;
+    private ArrayList<onTabSelected> listeners;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -58,6 +58,10 @@ public class CartaActivity extends AppCompatActivity{
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        listeners = new ArrayList<onTabSelected>(3);
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -107,8 +111,7 @@ public class CartaActivity extends AppCompatActivity{
 
             @Override
             public void onPageSelected(int i) {
-                //helloworld
-                listener.helloWorld();
+                listeners.get(i).setPlates(i);
             }
 
             @Override
@@ -120,7 +123,7 @@ public class CartaActivity extends AppCompatActivity{
     }
 
     public void setListener(onTabSelected listener){
-        this.listener = listener;
+        this.listeners.add(listener);
     }
 
     @Override
@@ -156,21 +159,24 @@ public class CartaActivity extends AppCompatActivity{
         }
 
         @Override
+        //it creates the fragment in case it's not catched or created
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             CartaFragment cartaFragment = new CartaFragment();
-            setListener(cartaFragment);
             switch (position){
                 case 0:
                     cartaFragment.setPage(0);
+                    setListener(cartaFragment);
                     return cartaFragment;
 
                 case 1:
                     cartaFragment.setPage(1);
+                    setListener(cartaFragment);
                     return cartaFragment;
 
                 case 2:
                     cartaFragment.setPage(2);
+                    setListener(cartaFragment);
                     return cartaFragment;
             }
             return null;
@@ -185,6 +191,6 @@ public class CartaActivity extends AppCompatActivity{
 
     public interface onTabSelected{
         void helloWorld();
-        void loadPlates(int plateSet);
+        void setPlates(int plateSet);
     }
 }

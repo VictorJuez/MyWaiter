@@ -7,7 +7,7 @@ public class Plate {
     public String ingredients;
     public int id;
     public int restaurant;
-    public String type;
+    public int set;
 
     public Plate(){
 
