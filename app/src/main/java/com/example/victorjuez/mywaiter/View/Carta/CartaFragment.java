@@ -100,7 +100,7 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
                 if (dataSnapshot.exists()){
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Plate plate = snapshot.getValue(Plate.class);
-                        if(!platesId.contains(plate.id)){
+                        if(!platesId.contains(plate.id) && plate.set == page){
                             plateList.add(plate);
                             platesId.add(plate.id);
                         }
