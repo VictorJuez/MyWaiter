@@ -72,8 +72,9 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
             public void onClick(View view, int position) {
                 Plate plate = plateList.get(position);
                 //Toast.makeText(getContext(),plate.getName() + " is selected!", Toast.LENGTH_SHORT).show();
-                //Intent intent = new Intent(getActivity(), PlateActivity.class);
-                //startActivity(intent);
+                plateController.setSelectedPlate(plate);
+                Intent intent = new Intent(getActivity(), PlateActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -89,6 +90,7 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
     }
 
     private void preparePlatoData() {
+        //TODO: make more efficient communication with DB, we are loading all plates for each fragment and discarding the ones we don't want to show.
         DatabaseReference platesReference = FirebaseDatabase.getInstance().getReference("Plates");
         Query query = platesReference
                 .orderByChild("restaurant")

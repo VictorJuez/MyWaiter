@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ScanActivity extends AppCompatActivity {
 
@@ -57,6 +58,7 @@ public class ScanActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            //TODO: implement the bottom buttons functionalities
             switch (item.getItemId()) {
                 case R.id.navigation_profile:
                     mTextMessage.setText(R.string.title_profile);
@@ -111,11 +113,41 @@ public class ScanActivity extends AppCompatActivity {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                found = false;
+                //in case to wrong reading qr code, to try again
+                //found = false;
 
                 //switch to restaurant information screen
-                /*Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
-                startActivity(intent);*/
+
+                Query query = FirebaseDatabase.getInstance().getReference("Restaurants")
+                        .orderByChild("id")
+                        .equalTo(1);
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            //TODO: only one restaurant received, refactor the for clause
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Restaurant restaurant = snapshot.getValue(Restaurant.class);
+
+                                ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
+                                activeRestaurant.setRestaurant(restaurant);
+
+                                Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                        else {
+                            System.out.println("This restaurant doesn't exists");
+                            txtResult.setText("This restaurant doesn't exists");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
@@ -205,6 +237,7 @@ public class ScanActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()){
+                            //TODO: only one restaurant received, refactor the for clause
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Restaurant restaurant = snapshot.getValue(Restaurant.class);
                                 txtResult.setText("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
