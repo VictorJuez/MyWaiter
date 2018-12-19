@@ -1,6 +1,7 @@
 package com.example.victorjuez.mywaiter.Model;
 
 public class Plate {
+    //TODO: price has to be float
     public String name;
     public String description;
     public String price;

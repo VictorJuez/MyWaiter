@@ -3,8 +3,10 @@ package com.example.victorjuez.mywaiter.Controller;
 import com.example.victorjuez.mywaiter.Model.Plate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShoppingCartController {
+    //TODO: create Model class cart with attributes plate and attribute qty;
     private static final ShoppingCartController ourInstance = new ShoppingCartController();
 
     private ArrayList<Plate> cart;
@@ -29,6 +31,16 @@ public class ShoppingCartController {
             qty.add(1);
         }
         logPrint();
+    }
+
+    public HashMap<Plate, Integer> getCart(){
+        HashMap<Plate, Integer> auxMap = new HashMap<>();
+
+        for(Plate plate : cart){
+            auxMap.put(plate, qty.get(cart.indexOf(plate)));
+        }
+
+        return auxMap;
     }
 
     private void logPrint() {
