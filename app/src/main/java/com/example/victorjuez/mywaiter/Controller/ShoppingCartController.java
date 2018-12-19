@@ -48,4 +48,9 @@ public class ShoppingCartController {
             System.out.println("Plate: "+plate.name+", Qty: "+qty.get(cart.indexOf(plate)));
         }
     }
+
+    public void empty(){
+        cart = new ArrayList<>();
+        qty = new ArrayList<>();
+    }
 }

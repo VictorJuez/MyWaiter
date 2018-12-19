@@ -2,6 +2,8 @@ package com.example.victorjuez.mywaiter.View.Carta;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,15 +17,33 @@ import java.util.Iterator;
 
 public class CheckoutActivity extends AppCompatActivity {
 
+    Button emptyCartButton;
+    TextView checkoutCartText;
+    ShoppingCartController shoppingCartController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        TextView checkoutCartText = findViewById(R.id.checkout_cart_text);
-        ShoppingCartController shoppingCartController = ShoppingCartController.getInstance();
-        HashMap<Plate, Integer> cart = shoppingCartController.getCart();
+        checkoutCartText = findViewById(R.id.checkout_cart_text);
+        emptyCartButton = findViewById(R.id.empty_cart_button);
 
+        shoppingCartController = ShoppingCartController.getInstance();
+
+        printCart();
+
+        emptyCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoppingCartController.empty();
+                checkoutCartText.setText("");
+            }
+        });
+    }
+
+    private void printCart() {
+        HashMap<Plate, Integer> cart = shoppingCartController.getCart();
         String text = "";
         Iterator it = cart.entrySet().iterator();
         while (it.hasNext()) {

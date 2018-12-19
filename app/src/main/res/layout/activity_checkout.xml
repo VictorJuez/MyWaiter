@@ -46,11 +46,20 @@
                 android:id="@+id/checkout_cart_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="1x Amanida Tropical \t\t\t\t 12€ \n1x Amanida Tropical \t\t\t\t 12€"/>
+                android:layout_alignParentLeft="true"/>
 
         </RelativeLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/empty_cart_button"
+        android:text="Empty Cart"
+        style="@style/AppTheme.RoundedCornerMaterialButton"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="400dp"/>
 
 </android.support.v7.widget.LinearLayoutCompat>
