@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -17,13 +18,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.MainActivity;
 import com.example.victorjuez.mywaiter.View.RestaurantActivity;
 import com.example.victorjuez.mywaiter.View.ScanActivity;
 
-public class CartaActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class CartaActivity extends AppCompatActivity{
+
+    //TODO: refactor
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -39,6 +46,8 @@ public class CartaActivity extends AppCompatActivity {
 
     private Button continue_btn;
 
+    private ArrayList<onTabSelected> listeners;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -51,6 +60,10 @@ public class CartaActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        listeners = new ArrayList<onTabSelected>(3);
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -92,7 +105,29 @@ public class CartaActivity extends AppCompatActivity {
             }
         });
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                listeners.get(i).setPlates(i);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
     }
+
+    public void setListener(onTabSelected listener){
+        this.listeners.add(listener);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -126,11 +161,27 @@ public class CartaActivity extends AppCompatActivity {
         }
 
         @Override
+        //it creates the fragment in case it's not catched or created
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
+            CartaFragment cartaFragment = new CartaFragment();
+            switch (position){
+                case 0:
+                    cartaFragment.setPage(0);
+                    setListener(cartaFragment);
+                    return cartaFragment;
 
-            CartaFragment carta1 = new CartaFragment();
-            return carta1;
+                case 1:
+                    cartaFragment.setPage(1);
+                    setListener(cartaFragment);
+                    return cartaFragment;
+
+                case 2:
+                    cartaFragment.setPage(2);
+                    setListener(cartaFragment);
+                    return cartaFragment;
+            }
+            return null;
         }
 
         @Override
@@ -138,5 +189,10 @@ public class CartaActivity extends AppCompatActivity {
             // Show 3 total pages.
             return 3;
         }
+    }
+
+    public interface onTabSelected{
+        void helloWorld();
+        void setPlates(int plateSet);
     }
 }

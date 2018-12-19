@@ -1,7 +1,10 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,19 +14,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.victorjuez.mywaiter.Model.Plato;
+import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.PlateController;
+import com.example.victorjuez.mywaiter.Model.Plate;
+import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.MainActivity;
 import com.example.victorjuez.mywaiter.View.PlateActivity;
+import com.example.victorjuez.mywaiter.View.RestaurantActivity;
+import com.example.victorjuez.mywaiter.View.ScanActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaFragment extends Fragment {
+public class CartaFragment extends Fragment implements CartaActivity.onTabSelected{
 
-    private List<Plato> platoList = new ArrayList<>();
+    Activity activity;
+
+    private List<Plate> plateList = new ArrayList<>();
+    private PlateController plateController;
     private RecyclerView recyclerView;
-    private PlatosAdapter pAdapter;
+    private PlateAdapter pAdapter;
+    private ArrayList<Integer> platesId = new ArrayList<>();
+    private int page;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity){
+            activity=(Activity) context;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,7 +60,7 @@ public class CartaFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        pAdapter = new PlatosAdapter(platoList);
+        pAdapter = new PlateAdapter(plateList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -42,8 +70,9 @@ public class CartaFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(rootView.getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Plato plato = platoList.get(position);
-                //Toast.makeText(getContext(),plato.getNombre() + " is selected!", Toast.LENGTH_SHORT).show();
+                Plate plate = plateList.get(position);
+                //Toast.makeText(getContext(),plate.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                plateController.setSelectedPlate(plate);
                 Intent intent = new Intent(getActivity(), PlateActivity.class);
                 startActivity(intent);
             }
@@ -54,29 +83,74 @@ public class CartaFragment extends Fragment {
             }
         }));
 
+        plateController = PlateController.getInstance();
         preparePlatoData();
-
-
 
         return rootView;
     }
 
     private void preparePlatoData() {
-        Plato plato = new Plato("plato1", "descripcion1", "1€");
-        platoList.add(plato);
+        //TODO: make more efficient communication with DB, we are loading all plates for each fragment and discarding the ones we don't want to show.
+        DatabaseReference platesReference = FirebaseDatabase.getInstance().getReference("Plates");
+        Query query = platesReference
+                .orderByChild("restaurant")
+                .equalTo(ActiveRestaurant.getInstance().getRestaurant().id);
 
-        plato = new Plato("plato2", "descripcion2", "2€");
-        platoList.add(plato);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Plate plate = snapshot.getValue(Plate.class);
+                        if(!platesId.contains(plate.id) && plate.set == page){
+                            plateList.add(plate);
+                            platesId.add(plate.id);
+                        }
+                    }
+                    plateController.setPlateList((ArrayList<Plate>) plateList);
+                    pAdapter.notifyDataSetChanged();
+                }
+                else {
+                    System.out.println("This plate doesn't exists");
+                }
+            }
 
-        plato = new Plato("plato3", "descripcion3", "3€");
-        platoList.add(plato);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        plato = new Plato("plato4", "descripcion4", "4€");
-        platoList.add(plato);
+            }
+        });
+    }
 
+    private void printPlates() {
+        for(Plate plate : plateList){
+            System.out.print(plate.name);
+            System.out.println();
+        }
+    }
 
+    public static CartaFragment newInstance(int someInt) {
+        CartaFragment myFragment = new CartaFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("page", someInt);
+        myFragment.setArguments(args);
+
+        return myFragment;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    @Override
+    public void helloWorld() {
+        plateList.add(plateController.getPlateList().get(0));
         pAdapter.notifyDataSetChanged();
     }
 
-
+    @Override
+    public void setPlates(int plateSet) {
+        
+    }
 }
