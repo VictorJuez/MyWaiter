@@ -12,4 +12,15 @@ public class Plate {
     public Plate(){
 
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this) return true;
+        if(!(obj instanceof Plate)) return false;
+
+        Plate aux = (Plate) obj;
+
+        if(aux.id == this.id) return true;
+        return false;
+    }
 }

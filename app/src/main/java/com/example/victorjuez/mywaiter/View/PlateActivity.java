@@ -2,13 +2,17 @@ package com.example.victorjuez.mywaiter.View;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Controller.PlateController;
+import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
@@ -27,9 +31,11 @@ public class PlateActivity extends AppCompatActivity {
     private TextView ingredientsView;
     private TextView platePriceView;
     private ImageView plateDetailedView;
+    private FloatingActionButton addToCartButton;
 
     private Restaurant selectedRestaurant;
     private ActiveRestaurant activeRestaurant;
+    private ShoppingCartController shoppingCartController;
 
     FirebaseStorage storage;
 
@@ -41,10 +47,13 @@ public class PlateActivity extends AppCompatActivity {
         activeRestaurant = ActiveRestaurant.getInstance();
         selectedRestaurant = activeRestaurant.getRestaurant();
 
+        shoppingCartController = ShoppingCartController.getInstance();
+
         plateNameView = findViewById(R.id.plate_name);
         ingredientsView = findViewById(R.id.ingredients_description);
         platePriceView = findViewById(R.id.plate_price);
         plateDetailedView = findViewById(R.id.plate_detailed);
+        addToCartButton = findViewById(R.id.addcart_button);
 
         plateController = PlateController.getInstance();
         selectedPlate = plateController.getSelectedPlate();
@@ -73,5 +82,14 @@ public class PlateActivity extends AppCompatActivity {
             }
         });
 
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Plate: "+selectedPlate.name+" added to cart", Toast.LENGTH_SHORT);
+                toast.show();
+
+                shoppingCartController.addToCart(selectedPlate);
+            }
+        });
     }
 }
