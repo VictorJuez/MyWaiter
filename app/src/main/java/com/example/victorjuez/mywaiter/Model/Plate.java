@@ -4,7 +4,7 @@ public class Plate {
     //TODO: price has to be float
     public String name;
     public String description;
-    public String price;
+    public int price;
     public String ingredients;
     public int id;
     public int restaurant;

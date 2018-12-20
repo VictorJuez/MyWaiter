@@ -120,7 +120,7 @@ public class ScanActivity extends AppCompatActivity {
 
                 Query query = FirebaseDatabase.getInstance().getReference("Restaurants")
                         .orderByChild("id")
-                        .equalTo(1);
+                        .equalTo(2);
 
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

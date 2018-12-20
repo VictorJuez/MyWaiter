@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class CheckoutActivity extends AppCompatActivity {
+    //TODO: [Layout] make empty cart button floating
 
     Button emptyCartButton;
     TextView checkoutCartText;

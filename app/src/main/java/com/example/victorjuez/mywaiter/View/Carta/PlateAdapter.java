@@ -26,13 +26,13 @@ public class PlateAdapter extends RecyclerView.Adapter<PlateAdapter.MyViewHolder
     private ActiveRestaurant activeRestaurant;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView nombre, precio, descripcion;
+        public TextView nombre, precio, ingredients;
         public ImageView image;
 
         public MyViewHolder(View view) {
             super(view);
             nombre = (TextView) view.findViewById(R.id.name);
-            descripcion = (TextView) view.findViewById(R.id.description);
+            ingredients = (TextView) view.findViewById(R.id.ingredients);
             precio = (TextView) view.findViewById(R.id.price);
             image = view.findViewById(R.id.photo_plate);
         }
@@ -55,8 +55,8 @@ public class PlateAdapter extends RecyclerView.Adapter<PlateAdapter.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Plate plate = platosList.get(position);
         holder.nombre.setText(plate.name);
-        holder.descripcion.setText(plate.description);
-        holder.precio.setText(plate.price);
+        holder.ingredients.setText(plate.ingredients);
+        holder.precio.setText(String.valueOf(plate.price)+"€");
 
         activeRestaurant = ActiveRestaurant.getInstance();
 
