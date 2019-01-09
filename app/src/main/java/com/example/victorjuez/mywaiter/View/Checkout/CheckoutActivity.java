@@ -25,6 +25,7 @@ public class CheckoutActivity extends AppCompatActivity {
     ShoppingCartController shoppingCartController;
 
     RecyclerView recyclerView;
+    CheckoutAdapter checkoutAdapter;
     TextView totalPrice;
 
     @Override
@@ -37,20 +38,23 @@ public class CheckoutActivity extends AppCompatActivity {
 
         shoppingCartController = ShoppingCartController.getInstance();
 
-        emptyCartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shoppingCartController.empty();
-            }
-        });
-
         recyclerView = findViewById(R.id.recyclerCheckout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        CheckoutAdapter checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
+        checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
         recyclerView.setAdapter(checkoutAdapter);
         totalPrice = findViewById(R.id.totalPrice);
         totalPrice.setText(String.valueOf(shoppingCartController.getTotalPrice())+"€");
 
+        emptyCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoppingCartController.empty();
+                checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
+                recyclerView.setAdapter(checkoutAdapter);
+                totalPrice = findViewById(R.id.totalPrice);
+                totalPrice.setText(String.valueOf(shoppingCartController.getTotalPrice())+"€");
+            }
+        });
     }
 }
