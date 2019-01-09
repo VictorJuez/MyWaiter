@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
+import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
 
@@ -21,10 +22,8 @@ public class CheckoutActivity extends AppCompatActivity {
     //TODO: [Layout] make empty cart button floating
 
     Button emptyCartButton;
-    TextView checkoutCartText;
     ShoppingCartController shoppingCartController;
 
-    ArrayList<String> plateNames;
     RecyclerView recyclerView;
 
     @Override
@@ -41,24 +40,18 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 shoppingCartController.empty();
-                checkoutCartText.setText("");
             }
         });
 
         recyclerView = findViewById(R.id.recyclerCheckout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        plateNames = new ArrayList<>();
-        plateNames.add("plato1");
-        plateNames.add("plato2");
-        plateNames.add("plate3");
-        plateNames.add("plate4");
 
-        CheckoutAdapter checkoutAdapter = new CheckoutAdapter(plateNames);
+        CheckoutAdapter checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
         recyclerView.setAdapter(checkoutAdapter);
 
     }
 
-    private void printCart() {
+    /*private void printCart() {
         HashMap<Plate, Integer> cart = shoppingCartController.getCart();
         String text = "";
         Iterator it = cart.entrySet().iterator();
@@ -72,5 +65,5 @@ public class CheckoutActivity extends AppCompatActivity {
 
             it.remove(); // avoids a ConcurrentModificationException
         }
-    }
+    }*/
 }

@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.Controller;
 
+import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Plate;
 
 import java.util.ArrayList;
@@ -9,8 +10,7 @@ public class ShoppingCartController {
     //TODO: create Model class cart with attributes plate and attribute qty;
     private static final ShoppingCartController ourInstance = new ShoppingCartController();
 
-    private ArrayList<Plate> cart;
-    private ArrayList<Integer> qty;
+    private ArrayList<CartItem> cart;
 
     public static ShoppingCartController getInstance() {
         return ourInstance;
@@ -18,39 +18,31 @@ public class ShoppingCartController {
 
     private ShoppingCartController() {
         cart = new ArrayList<>();
-        qty = new ArrayList<>();
     }
 
     public void addToCart(Plate plate){
-        if(cart.contains(plate)){
-            int index = cart.indexOf(plate);
-            qty.add(index, qty.get(index)+1);
+        CartItem cartItem = new CartItem(plate);
+        if(cart.contains(cartItem)){
+            int index = cart.indexOf(cartItem);
+            cart.get(index).incrementQty();
         }
         else {
-            cart.add(plate);
-            qty.add(1);
+            cart.add(cartItem);
         }
         logPrint();
     }
 
-    public HashMap<Plate, Integer> getCart(){
-        HashMap<Plate, Integer> auxMap = new HashMap<>();
-
-        for(Plate plate : cart){
-            auxMap.put(plate, qty.get(cart.indexOf(plate)));
-        }
-
-        return auxMap;
+    public ArrayList<CartItem> getCart() {
+        return cart;
     }
 
     private void logPrint() {
-        for(Plate plate : cart){
-            System.out.println("Plate: "+plate.name+", Qty: "+qty.get(cart.indexOf(plate)));
+        for(CartItem cartItem : cart){
+            System.out.println("Plate: "+cartItem.getPlate().name+", Qty: "+cartItem.getQty());
         }
     }
 
     public void empty(){
         cart = new ArrayList<>();
-        qty = new ArrayList<>();
     }
 }

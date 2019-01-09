@@ -7,16 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.R;
 
 import java.util.ArrayList;
 
 public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.MyViewHolder> {
 
-    ArrayList<String> listPlates;
+    ArrayList<CartItem> cart;
 
-    public CheckoutAdapter(ArrayList<String> listPlates) {
-        this.listPlates = listPlates;
+    public CheckoutAdapter(ArrayList<CartItem> cart) {
+        this.cart = cart;
     }
 
     @NonNull
@@ -29,20 +30,24 @@ public class CheckoutAdapter extends RecyclerView.Adapter<CheckoutAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        myViewHolder.plateTextView.setText(listPlates.get(i));
+        CartItem cartItem = cart.get(i);
+
+        myViewHolder.plateTextView.setText(String.valueOf(cartItem.getQty())+"x "+cartItem.getPlate().name);
+        myViewHolder.priceTextView.setText(String.valueOf(cartItem.getPlate().price * cartItem.getQty()) + "€");
     }
 
     @Override
     public int getItemCount() {
-        return listPlates.size();
+        return cart.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView plateTextView;
+        TextView plateTextView, priceTextView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             plateTextView = itemView.findViewById(R.id.mytextview);
+            priceTextView = itemView.findViewById(R.id.mytextview2);
         }
     }
 }
