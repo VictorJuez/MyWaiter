@@ -1,6 +1,5 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -18,13 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.MainActivity;
+import com.example.victorjuez.mywaiter.View.Checkout.CheckoutActivity;
 import com.example.victorjuez.mywaiter.View.RestaurantActivity;
-import com.example.victorjuez.mywaiter.View.ScanActivity;
 
 import java.util.ArrayList;
 

@@ -34,7 +34,7 @@
                 android:value="com.example.victorjuez.mywaiter.View.RestaurantActivity" />
             </activity>
         <activity android:name=".View.PlateActivity" />
-        <activity android:name=".View.Carta.CheckoutActivity"></activity>
+        <activity android:name=".View.Checkout.CheckoutActivity"></activity>
 
         <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode" />
     </application>
