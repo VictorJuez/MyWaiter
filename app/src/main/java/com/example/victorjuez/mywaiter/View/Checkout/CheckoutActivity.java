@@ -22,6 +22,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -71,8 +72,13 @@ public class CheckoutActivity extends AppCompatActivity {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<CartItem> cart = shoppingCartController.getCart();
+                Map<String, Integer> plates = new HashMap<>();
+                for(CartItem cartItem : cart) {
+                    plates.put(String.valueOf(cartItem.getPlate().id), cartItem.getQty());
+                }
                 String id = ordersRef.push().getKey();
-                Order order = new Order(id,"1", activeRestaurant.getRestaurant().id, shoppingCartController.getPlatesID(), shoppingCartController.getPlatesQty());
+                Order order = new Order(id,"1", activeRestaurant.getRestaurant().id, plates);
                 ordersRef.child(id).setValue(order);
             }
         });
