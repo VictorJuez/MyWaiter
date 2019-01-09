@@ -28,7 +28,7 @@ public class PlateActivity extends AppCompatActivity {
     private Plate selectedPlate;
 
     private TextView plateNameView;
-    private TextView ingredientsView;
+    private TextView descriptionPlateView;
     private TextView platePriceView;
     private ImageView plateDetailedView;
     private FloatingActionButton addToCartButton;
@@ -50,7 +50,7 @@ public class PlateActivity extends AppCompatActivity {
         shoppingCartController = ShoppingCartController.getInstance();
 
         plateNameView = findViewById(R.id.plate_name);
-        ingredientsView = findViewById(R.id.ingredients_description);
+        descriptionPlateView = findViewById(R.id.description_plate_text);
         platePriceView = findViewById(R.id.plate_price);
         plateDetailedView = findViewById(R.id.plate_detailed);
         addToCartButton = findViewById(R.id.addcart_button);
@@ -59,8 +59,8 @@ public class PlateActivity extends AppCompatActivity {
         selectedPlate = plateController.getSelectedPlate();
 
         plateNameView.setText(selectedPlate.name);
-        ingredientsView.setText(selectedPlate.ingredients);
-        platePriceView.setText(selectedPlate.price);
+        descriptionPlateView.setText(selectedPlate.description);
+        platePriceView.setText(String.valueOf(selectedPlate.price)+"€");
 
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();

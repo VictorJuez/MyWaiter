@@ -66,16 +66,16 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/ingredients_title"
+            android:id="@+id/description_plate_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:text="Ingredients"
+            android:text="Description"
             android:padding="10dp"
             android:textColor="@color/black"
             />
         <TextView
-            android:id="@+id/ingredients_description"
+            android:id="@+id/description_plate_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"

@@ -44,14 +44,33 @@
         android:textColorHint="#606060"
         android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/loginButton"
+
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="LOGIN"
-        android:layout_marginTop="20dp"
-        style="@style/AppTheme.RoundedCornerMaterialButton"
-        />
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="LOGIN"
+            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
+            style="@style/AppTheme.RoundedCornerMaterialButton"
+            />
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="REGISTER"
+            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
+            style="@style/AppTheme.RoundedCornerMaterialButton"
+            />
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </LinearLayout>
