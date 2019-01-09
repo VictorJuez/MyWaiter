@@ -1,5 +1,8 @@
 package com.example.victorjuez.mywaiter.View.Checkout;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
@@ -15,6 +19,12 @@ import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Order;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
+import com.example.victorjuez.mywaiter.View.MainActivity;
+import com.example.victorjuez.mywaiter.View.OrderConfirmed;
+import com.example.victorjuez.mywaiter.View.ScanActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -72,14 +82,31 @@ public class CheckoutActivity extends AppCompatActivity {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ArrayList<CartItem> cart = shoppingCartController.getCart();
-                Map<String, Integer> plates = new HashMap<>();
-                for(CartItem cartItem : cart) {
-                    plates.put(String.valueOf(cartItem.getPlate().id), cartItem.getQty());
+                if (cart.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Nothing to order!", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Map<String, Integer> plates = new HashMap<>();
+                    for (CartItem cartItem : cart) {
+                        plates.put(String.valueOf(cartItem.getPlate().id), cartItem.getQty());
+                    }
+                    String id = ordersRef.push().getKey();
+                    Order order = new Order(id, "1", activeRestaurant.getRestaurant().id, plates);
+                    ordersRef.child(id).setValue(order, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                            if (databaseError != null) {
+                                System.out.println("Data could not be saved. " + databaseError.getMessage());
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Order Confirmed", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(CheckoutActivity.this, OrderConfirmed.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
                 }
-                String id = ordersRef.push().getKey();
-                Order order = new Order(id,"1", activeRestaurant.getRestaurant().id, plates);
-                ordersRef.child(id).setValue(order);
             }
         });
     }

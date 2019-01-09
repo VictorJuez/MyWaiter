@@ -105,8 +105,6 @@ public class ScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
 
         mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         scanButton = findViewById(R.id.scanButton);
 

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.victorjuez.mywaiter">
-    
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    
 
     <application
         android:allowBackup="true"
@@ -32,11 +30,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.victorjuez.mywaiter.View.RestaurantActivity" />
-            </activity>
+        </activity>
         <activity android:name=".View.PlateActivity" />
-        <activity android:name=".View.Checkout.CheckoutActivity"></activity>
+        <activity android:name=".View.Checkout.CheckoutActivity" />
 
-        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity android:name=".View.OrderConfirmed"></activity>
     </application>
 
 </manifest>
