@@ -39,6 +39,24 @@ public class ShoppingCartController {
         return cart;
     }
 
+    public ArrayList<Integer> getPlatesID(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for(CartItem cartItem : cart){
+          ids.add(cartItem.getPlate().id);
+        }
+
+        return ids;
+    }
+
+    public ArrayList<Integer> getPlatesQty(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for(CartItem cartItem : cart){
+            ids.add(cartItem.getQty());
+        }
+
+        return ids;
+    }
+
     public int getTotalPrice() {
         return totalPrice;
     }
