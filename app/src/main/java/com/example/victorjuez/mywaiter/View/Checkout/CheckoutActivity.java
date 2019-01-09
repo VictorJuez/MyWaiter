@@ -25,6 +25,7 @@ public class CheckoutActivity extends AppCompatActivity {
     ShoppingCartController shoppingCartController;
 
     RecyclerView recyclerView;
+    TextView totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +49,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
         CheckoutAdapter checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
         recyclerView.setAdapter(checkoutAdapter);
+        totalPrice = findViewById(R.id.totalPrice);
+        totalPrice.setText(String.valueOf(shoppingCartController.getTotalPrice())+"€");
 
     }
-
-    /*private void printCart() {
-        HashMap<Plate, Integer> cart = shoppingCartController.getCart();
-        String text = "";
-        Iterator it = cart.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            Plate plate = (Plate) pair.getKey();
-
-            //System.out.println(plate.name + " = " + pair.getValue());
-            text+=pair.getValue()+"x "+plate.name+"\t\t\t\t"+plate.price+"\n";
-            checkoutCartText.setText(text);
-
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-    }*/
 }
