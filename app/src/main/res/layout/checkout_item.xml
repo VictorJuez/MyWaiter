@@ -9,7 +9,8 @@
         android:id="@+id/mytextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/mytextview2"/>
 
     <TextView
         android:id="@+id/mytextview2"
