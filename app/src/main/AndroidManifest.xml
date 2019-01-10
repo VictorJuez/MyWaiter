@@ -38,7 +38,9 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".View.OrderConfirmed"></activity>
+        <activity
+            android:name=".View.Support.SupportActivity"
+            android:label="@string/title_activity_support"></activity>
     </application>
 
 </manifest>
