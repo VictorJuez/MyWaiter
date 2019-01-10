@@ -4,9 +4,9 @@ public class CartItem {
     private Plate plate;
     private int qty;
 
-    public CartItem(Plate plate) {
+    public CartItem(Plate plate, int qty) {
         this.plate = plate;
-        this.qty = 1;
+        this.qty = qty;
     }
 
     public void incrementQty(){
@@ -20,6 +20,10 @@ public class CartItem {
 
     public int getQty() {
         return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 
     @Override

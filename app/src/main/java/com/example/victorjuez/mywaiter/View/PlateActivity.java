@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Controller.PlateController;
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
+import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
@@ -31,7 +33,9 @@ public class PlateActivity extends AppCompatActivity {
     private TextView descriptionPlateView;
     private TextView platePriceView;
     private ImageView plateDetailedView;
-    private FloatingActionButton addToCartButton;
+    private FloatingActionButton addButton, removeButton;
+    private Button addToCartButton;
+    private TextView platesNum;
 
     private Restaurant selectedRestaurant;
     private ActiveRestaurant activeRestaurant;
@@ -53,7 +57,10 @@ public class PlateActivity extends AppCompatActivity {
         descriptionPlateView = findViewById(R.id.description_plate_text);
         platePriceView = findViewById(R.id.plate_price);
         plateDetailedView = findViewById(R.id.plate_detailed);
-        addToCartButton = findViewById(R.id.addcart_button);
+        addButton = findViewById(R.id.add_button);
+        removeButton = findViewById(R.id.remove_button);
+        platesNum = findViewById(R.id.tv_platesNum);
+        addToCartButton = findViewById(R.id.addToCart_button);
 
         plateController = PlateController.getInstance();
         selectedPlate = plateController.getSelectedPlate();
@@ -82,13 +89,37 @@ public class PlateActivity extends AppCompatActivity {
             }
         });
 
-        addToCartButton.setOnClickListener(new View.OnClickListener() {
+        if(shoppingCartController.getPlatesID().contains(plateController.getSelectedPlate().id)) {
+            platesNum.setText(String.valueOf(shoppingCartController.getCart().get(shoppingCartController.getCart().indexOf(new CartItem(plateController.getSelectedPlate(),1))).getQty()));
+        }
+
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Plate: "+selectedPlate.name+" added to cart", Toast.LENGTH_SHORT);
                 toast.show();
-                shoppingCartController.addToCart(selectedPlate);
-                finish();
+                int n = Integer.valueOf((String)platesNum.getText());
+                platesNum.setText(String.valueOf(n+1));
+            }
+        });
+
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int n = Integer.valueOf((String)platesNum.getText());
+                if(n>0)platesNum.setText(String.valueOf(n-1));
+            }
+        });
+
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int numPlates = Integer.valueOf((String)platesNum.getText());
+                if(numPlates > 0) {
+                    shoppingCartController.addToCart(selectedPlate, numPlates);
+                    finish();
+                }
+                else Toast.makeText(PlateActivity.this, "Can't be ordered 0 plates", Toast.LENGTH_SHORT).show();
             }
         });
     }

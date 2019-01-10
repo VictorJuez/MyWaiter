@@ -22,11 +22,11 @@ public class ShoppingCartController {
         totalPrice = 0;
     }
 
-    public void addToCart(Plate plate){
-        CartItem cartItem = new CartItem(plate);
+    public void addToCart(Plate plate, int qty){
+        CartItem cartItem = new CartItem(plate, qty);
         if(cart.contains(cartItem)){
             int index = cart.indexOf(cartItem);
-            cart.get(index).incrementQty();
+            cart.get(index).setQty(qty);
         }
         else {
             cart.add(cartItem);

@@ -15,13 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.PlateController;
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
 import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Order;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
+import com.example.victorjuez.mywaiter.View.Carta.RecyclerTouchListener;
 import com.example.victorjuez.mywaiter.View.MainActivity;
 import com.example.victorjuez.mywaiter.View.OrderConfirmed;
+import com.example.victorjuez.mywaiter.View.PlateActivity;
 import com.example.victorjuez.mywaiter.View.ScanActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +44,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     Button emptyCartButton, orderButton;
     ShoppingCartController shoppingCartController;
+    PlateController plateController;
     ActiveRestaurant activeRestaurant;
 
     RecyclerView recyclerView;
@@ -71,6 +75,7 @@ public class CheckoutActivity extends AppCompatActivity {
         orderButton = findViewById(R.id.order_button);
 
         shoppingCartController = ShoppingCartController.getInstance();
+        plateController = PlateController.getInstance();
         activeRestaurant = ActiveRestaurant.getInstance();
 
         recyclerView = findViewById(R.id.recyclerCheckout);
@@ -80,6 +85,22 @@ public class CheckoutActivity extends AppCompatActivity {
         recyclerView.setAdapter(checkoutAdapter);
         totalPrice = findViewById(R.id.totalPrice);
         totalPrice.setText(String.valueOf(shoppingCartController.getTotalPrice())+"€");
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Plate plate = shoppingCartController.getCart().get(position).getPlate();
+                //Toast.makeText(getContext(),plate.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                plateController.setSelectedPlate(plate);
+                Intent intent = new Intent(CheckoutActivity.this, PlateActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         emptyCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
