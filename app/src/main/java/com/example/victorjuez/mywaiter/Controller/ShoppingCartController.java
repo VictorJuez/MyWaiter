@@ -11,7 +11,6 @@ public class ShoppingCartController {
     private static final ShoppingCartController ourInstance = new ShoppingCartController();
 
     private ArrayList<CartItem> cart;
-    private int totalPrice;
 
     public static ShoppingCartController getInstance() {
         return ourInstance;
@@ -19,7 +18,6 @@ public class ShoppingCartController {
 
     private ShoppingCartController() {
         cart = new ArrayList<>();
-        totalPrice = 0;
     }
 
     public void addToCart(Plate plate, int qty){
@@ -31,7 +29,6 @@ public class ShoppingCartController {
         else {
             cart.add(cartItem);
         }
-        totalPrice+=plate.price;
         logPrint();
     }
 
@@ -58,6 +55,10 @@ public class ShoppingCartController {
     }
 
     public int getTotalPrice() {
+        int totalPrice = 0;
+        for(CartItem cartItem : cart){
+            totalPrice+=cartItem.getPlate().price*cartItem.getQty();
+        }
         return totalPrice;
     }
 
@@ -69,6 +70,10 @@ public class ShoppingCartController {
 
     public void empty(){
         cart = new ArrayList<>();
-        totalPrice = 0;
+    }
+
+    public void removePlate(Plate plate){
+        CartItem cartItem = cart.get(cart.indexOf(new CartItem(plate, 0)));
+        cart.remove(new CartItem(plate, 0));
     }
 }

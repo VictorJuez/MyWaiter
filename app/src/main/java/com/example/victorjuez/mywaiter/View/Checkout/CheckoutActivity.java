@@ -94,6 +94,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 plateController.setSelectedPlate(plate);
                 Intent intent = new Intent(CheckoutActivity.this, PlateActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override

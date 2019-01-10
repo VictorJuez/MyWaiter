@@ -101,7 +101,7 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimary"
         app:borderWidth="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addToCart_button"
+        app:layout_constraintBottom_toTopOf="@+id/remove_cart_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_linearLayout"
         app:srcCompat="@drawable/ic_add_24px" />
@@ -115,7 +115,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="0"
-        app:layout_constraintBottom_toTopOf="@+id/addToCart_button"
+        app:layout_constraintBottom_toTopOf="@+id/remove_cart_button"
         app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintStart_toEndOf="@+id/remove_button"
         app:layout_constraintTop_toBottomOf="@+id/description_linearLayout" />
@@ -131,11 +131,23 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimary"
         app:borderWidth="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addToCart_button"
+        app:layout_constraintBottom_toTopOf="@+id/remove_cart_button"
         app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description_linearLayout"
         app:srcCompat="@drawable/ic_remove_black_24dp" />
+
+    <Button
+        android:id="@+id/remove_cart_button"
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="#FFF"
+        android:text="REMOVE FROM CART"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/addToCart_button"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/addToCart_button"

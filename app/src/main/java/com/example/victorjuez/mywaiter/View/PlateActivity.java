@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.View;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
+import com.example.victorjuez.mywaiter.View.Checkout.CheckoutActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,12 +36,14 @@ public class PlateActivity extends AppCompatActivity {
     private TextView platePriceView;
     private ImageView plateDetailedView;
     private FloatingActionButton addButton, removeButton;
-    private Button addToCartButton;
+    private Button addToCartButton, removeFromCartButton;
     private TextView platesNum;
 
     private Restaurant selectedRestaurant;
     private ActiveRestaurant activeRestaurant;
     private ShoppingCartController shoppingCartController;
+
+    private boolean updateState;
 
     FirebaseStorage storage;
 
@@ -61,6 +65,7 @@ public class PlateActivity extends AppCompatActivity {
         removeButton = findViewById(R.id.remove_button);
         platesNum = findViewById(R.id.tv_platesNum);
         addToCartButton = findViewById(R.id.addToCart_button);
+        removeFromCartButton = findViewById(R.id.remove_cart_button);
 
         plateController = PlateController.getInstance();
         selectedPlate = plateController.getSelectedPlate();
@@ -68,6 +73,8 @@ public class PlateActivity extends AppCompatActivity {
         plateNameView.setText(selectedPlate.name);
         descriptionPlateView.setText(selectedPlate.description);
         platePriceView.setText(String.valueOf(selectedPlate.price)+"€");
+
+        updateState = false;
 
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
@@ -89,8 +96,12 @@ public class PlateActivity extends AppCompatActivity {
             }
         });
 
-        if(shoppingCartController.getPlatesID().contains(plateController.getSelectedPlate().id)) {
+        if(shoppingCartController.getPlatesID().contains(plateController.getSelectedPlate().id)) updateState = true;
+
+        if(updateState){
             platesNum.setText(String.valueOf(shoppingCartController.getCart().get(shoppingCartController.getCart().indexOf(new CartItem(plateController.getSelectedPlate(),1))).getQty()));
+            removeFromCartButton.setVisibility(View.VISIBLE);
+            addToCartButton.setText("UPDATE CART");
         }
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -117,9 +128,21 @@ public class PlateActivity extends AppCompatActivity {
                 int numPlates = Integer.valueOf((String)platesNum.getText());
                 if(numPlates > 0) {
                     shoppingCartController.addToCart(selectedPlate, numPlates);
+                    if(updateState) {
+                        Intent intent = new Intent(PlateActivity.this, CheckoutActivity.class);
+                        startActivity(intent);
+                    }
                     finish();
                 }
                 else Toast.makeText(PlateActivity.this, "Can't be ordered 0 plates", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        removeFromCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shoppingCartController.removePlate(plateController.getSelectedPlate());
+                finish();
             }
         });
     }
