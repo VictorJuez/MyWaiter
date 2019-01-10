@@ -107,8 +107,6 @@ public class PlateActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Plate: "+selectedPlate.name+" added to cart", Toast.LENGTH_SHORT);
-                toast.show();
                 int n = Integer.valueOf((String)platesNum.getText());
                 platesNum.setText(String.valueOf(n+1));
             }
@@ -132,6 +130,7 @@ public class PlateActivity extends AppCompatActivity {
                         Intent intent = new Intent(PlateActivity.this, CheckoutActivity.class);
                         startActivity(intent);
                     }
+                    Toast.makeText(getApplicationContext(), "Plate: "+selectedPlate.name+" added to cart", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else Toast.makeText(PlateActivity.this, "Can't be ordered 0 plates", Toast.LENGTH_SHORT).show();
