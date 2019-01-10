@@ -87,8 +87,8 @@ public class PlateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Plate: "+selectedPlate.name+" added to cart", Toast.LENGTH_SHORT);
                 toast.show();
-
                 shoppingCartController.addToCart(selectedPlate);
+                finish();
             }
         });
     }

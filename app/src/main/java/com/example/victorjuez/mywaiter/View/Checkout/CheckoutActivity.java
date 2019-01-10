@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -53,6 +54,18 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_checkout);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //startActivity(new Intent(getApplicationContext(),RestaurantActivity.class));
+                finish();
+            }
+        });
+
         //checkoutCartText = findViewById(R.id.checkout_cart_text);
         emptyCartButton = findViewById(R.id.empty_cart_button);
         orderButton = findViewById(R.id.order_button);
@@ -76,6 +89,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 recyclerView.setAdapter(checkoutAdapter);
                 totalPrice = findViewById(R.id.totalPrice);
                 totalPrice.setText(String.valueOf(shoppingCartController.getTotalPrice())+"€");
+
+                finish();
             }
         });
 
