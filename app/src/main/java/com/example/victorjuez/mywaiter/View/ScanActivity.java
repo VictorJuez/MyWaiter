@@ -133,6 +133,7 @@ public class ScanActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                         else {

@@ -78,7 +78,8 @@ public class CartaActivity extends AppCompatActivity{
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RestaurantActivity.class));
+                //startActivity(new Intent(getApplicationContext(),RestaurantActivity.class));
+                finish();
             }
         });
 
