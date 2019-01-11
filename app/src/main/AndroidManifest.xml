@@ -22,7 +22,6 @@
         <activity
             android:name=".View.ScanActivity"
             android:label="@string/title_activity_scan" />
-        <activity android:name=".View.RestaurantActivity" />
         <activity
             android:name=".View.Carta.CartaActivity"
             android:label="@string/title_activity_carta"
@@ -39,7 +38,7 @@
             android:value="barcode" />
 
         <activity
-            android:name=".View.Support.SupportActivity"
+            android:name=".View.Support.RestaurantActivity"
             android:label="@string/title_activity_support"></activity>
     </application>
 

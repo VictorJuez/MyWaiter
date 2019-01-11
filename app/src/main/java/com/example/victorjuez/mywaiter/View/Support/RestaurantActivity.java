@@ -18,7 +18,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class SupportActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class RestaurantActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private TextView mTextMessage;
     private ImageView restaurantProfileImage;
@@ -30,7 +30,7 @@ public class SupportActivity extends AppCompatActivity implements BottomNavigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_support);
+        setContentView(R.layout.activity_restaurant);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         restaurantProfileImage = findViewById(R.id.restaurantProfileImage);

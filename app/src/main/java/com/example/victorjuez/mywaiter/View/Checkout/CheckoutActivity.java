@@ -22,7 +22,7 @@ import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Carta.RecyclerTouchListener;
 import com.example.victorjuez.mywaiter.View.PlateActivity;
-import com.example.victorjuez.mywaiter.View.Support.SupportActivity;
+import com.example.victorjuez.mywaiter.View.Support.RestaurantActivity;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -130,7 +130,7 @@ public class CheckoutActivity extends AppCompatActivity {
                                 System.out.println("Data could not be saved. " + databaseError.getMessage());
                             } else {
                                 Toast.makeText(getApplicationContext(), "Order Confirmed", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(CheckoutActivity.this, SupportActivity.class);
+                                Intent intent = new Intent(CheckoutActivity.this, RestaurantActivity.class);
                                 startActivity(intent);
                             }
                         }
