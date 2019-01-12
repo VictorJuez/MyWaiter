@@ -1,5 +1,6 @@
 package com.example.victorjuez.mywaiter.Controller;
 
+import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Plate;
 
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ public class ShoppingCartController {
     //TODO: create Model class cart with attributes plate and attribute qty;
     private static final ShoppingCartController ourInstance = new ShoppingCartController();
 
-    private ArrayList<Plate> cart;
-    private ArrayList<Integer> qty;
+    private ArrayList<CartItem> cart;
+    private ArrayList<CartItem> ordered;
 
     public static ShoppingCartController getInstance() {
         return ourInstance;
@@ -18,39 +19,87 @@ public class ShoppingCartController {
 
     private ShoppingCartController() {
         cart = new ArrayList<>();
-        qty = new ArrayList<>();
+        ordered = new ArrayList<>();
     }
 
-    public void addToCart(Plate plate){
-        if(cart.contains(plate)){
-            int index = cart.indexOf(plate);
-            qty.add(index, qty.get(index)+1);
+    public void addToCart(Plate plate, int qty){
+        CartItem cartItem = new CartItem(plate, qty);
+        if(cart.contains(cartItem)){
+            int index = cart.indexOf(cartItem);
+            cart.get(index).setQty(qty);
         }
         else {
-            cart.add(plate);
-            qty.add(1);
+            cart.add(cartItem);
         }
         logPrint();
     }
 
-    public HashMap<Plate, Integer> getCart(){
-        HashMap<Plate, Integer> auxMap = new HashMap<>();
+    public ArrayList<CartItem> getCart() {
+        return cart;
+    }
 
-        for(Plate plate : cart){
-            auxMap.put(plate, qty.get(cart.indexOf(plate)));
+    public ArrayList<Integer> getPlatesID(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for(CartItem cartItem : cart){
+          ids.add(cartItem.getPlate().id);
         }
 
-        return auxMap;
+        return ids;
+    }
+
+    public ArrayList<Integer> getPlatesQty(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for(CartItem cartItem : cart){
+            ids.add(cartItem.getQty());
+        }
+
+        return ids;
+    }
+
+    public int getTotalPriceCart() {
+        int totalPrice = 0;
+        for(CartItem cartItem : cart){
+            totalPrice+=cartItem.getPlate().price*cartItem.getQty();
+        }
+        return totalPrice;
+    }
+
+    public int getTotalPriceOrdered(){
+        int totalPrice = 0;
+        for(CartItem orderItem : ordered){
+            totalPrice+=orderItem.getPlate().price*orderItem.getQty();
+        }
+        return totalPrice;
     }
 
     private void logPrint() {
-        for(Plate plate : cart){
-            System.out.println("Plate: "+plate.name+", Qty: "+qty.get(cart.indexOf(plate)));
+        for(CartItem cartItem : cart){
+            System.out.println("Plate: "+cartItem.getPlate().name+", Qty: "+cartItem.getQty());
         }
     }
 
     public void empty(){
         cart = new ArrayList<>();
-        qty = new ArrayList<>();
+    }
+
+    public void removePlate(Plate plate){
+        cart.remove(new CartItem(plate, 0));
+    }
+
+    public void makeOrder() {
+        if(ordered.isEmpty()) ordered = cart;
+        else{
+            for(CartItem cartItem : cart){
+                if(ordered.contains(cartItem)){
+                    CartItem orderedItem = ordered.get(ordered.indexOf(cartItem));
+                    ordered.get(ordered.indexOf(cartItem)).setQty(orderedItem.getQty()+cartItem.getQty());
+                }
+                else ordered.add(cartItem);
+            }
+        }
+    }
+
+    public ArrayList<CartItem> getOrdered() {
+        return ordered;
     }
 }

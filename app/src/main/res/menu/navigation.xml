@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_profile" />
+        android:id="@+id/navigation_order"
+        android:icon="@drawable/ic_assignment_black_24dp"
+        android:title="My Order" />
 
     <item
-        android:id="@+id/navigation_scan"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_scan" />
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_baseline_restaurant_menu_24px"
+        android:title="Dashboard" />
 
     <item
-        android:id="@+id/navigation_settings"
+        android:id="@+id/navigation_waiter"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_settings" />
+        android:title="Waiter" />
 
 </menu>

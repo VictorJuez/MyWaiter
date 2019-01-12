@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.RestaurantActivity"
-    android:layout_marginBottom="0dp"
-    android:orientation="vertical">
+    tools:context=".View.Support.RestaurantActivity">
 
     <ImageView
         android:id="@+id/restaurantProfileImage"
@@ -16,118 +15,49 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
 
-    <LinearLayout
-        android:id="@+id/tagsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="16dp"
-        android:background="#FFF"
-        android:elevation="4dp"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/tag0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AppTheme.RoundedCornerMaterialTag"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:text="Vegan"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            />
-
-        <TextView
-            android:id="@+id/tag1"
-            style="@style/AppTheme.RoundedCornerMaterialTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:text="Gluten Friendly"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            />
-
-        <TextView
-            android:id="@+id/tag2"
-            style="@style/AppTheme.RoundedCornerMaterialTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:text="Gluten Friendly"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="#FFF"
-        android:elevation="4dp"
-        android:padding="20dp"
-        android:orientation="vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantProfileImage">
 
-        <TextView
-            android:id="@+id/restaurantTelephone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="999 999 999"
-            android:drawableLeft="@drawable/ic_baseline_local_phone_24px"
-            android:drawablePadding="10dp"/>
+    </FrameLayout>
 
-        <TextView
-            android:id="@+id/restaurantEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="restaurant.email@email.com"
-            android:drawableLeft="@drawable/ic_baseline_email_24px"
-            android:drawablePadding="10dp"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/restaurantAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Adress from restaurant, 99, Location"
-            android:drawableLeft="@drawable/ic_baseline_location_on_24px"
-            android:drawablePadding="10dp"
-            android:layout_marginTop="10dp"/>
-
-    </LinearLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/bottom_nav_color_selector"
+        app:itemTextColor="@color/bottom_nav_color_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/ratingLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="#FFF"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/layout_bg"
         android:elevation="4dp"
-        android:padding="50dp"
-        android:orientation="vertical">
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/restaurantProfileImage"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/restaurantDescription"
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"/>
-
-        <Button
-            android:id="@+id/verCartaButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            style="@style/AppTheme.RoundedCornerMaterialButton"
-            android:layout_marginTop="15dp"
-            android:text="VER CARTA"
-
-            />
-
+            android:layout_height="wrap_content"/>
     </LinearLayout>
-
-</android.support.v7.widget.LinearLayoutCompat>
+</android.support.constraint.ConstraintLayout>

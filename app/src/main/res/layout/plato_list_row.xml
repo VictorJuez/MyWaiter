@@ -26,6 +26,7 @@
         android:layout_alignParentTop="true"
         android:textColor="@color/colorPrimaryDark"
         android:layout_toRightOf="@+id/photo_plate"
+        android:layout_toLeftOf="@+id/price"
         android:textSize="16dp"
         android:textStyle="bold" />
 

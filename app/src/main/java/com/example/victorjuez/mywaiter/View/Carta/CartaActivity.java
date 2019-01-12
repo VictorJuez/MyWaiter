@@ -1,10 +1,7 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -18,13 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.MainActivity;
-import com.example.victorjuez.mywaiter.View.RestaurantActivity;
-import com.example.victorjuez.mywaiter.View.ScanActivity;
+import com.example.victorjuez.mywaiter.View.Checkout.CheckoutActivity;
 
 import java.util.ArrayList;
 
@@ -77,21 +70,13 @@ public class CartaActivity extends AppCompatActivity{
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RestaurantActivity.class));
+                //startActivity(new Intent(getApplicationContext(),RestaurantActivity.class));
+                finish();
             }
         });
 

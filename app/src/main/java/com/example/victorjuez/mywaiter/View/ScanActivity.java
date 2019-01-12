@@ -7,11 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
-import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -20,7 +18,9 @@ import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
+import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
+import com.example.victorjuez.mywaiter.View.Support.RestaurantActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -35,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ScanActivity extends AppCompatActivity {
 
@@ -46,33 +45,13 @@ public class ScanActivity extends AppCompatActivity {
     TextView txtResult;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
+    Session session;
     final int RequestCameraPermissionID = 1001;
 
     DatabaseReference dbRestaurants;
 
     boolean found = false;
 
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            //TODO: implement the bottom buttons functionalities
-            switch (item.getItemId()) {
-                case R.id.navigation_profile:
-                    mTextMessage.setText(R.string.title_profile);
-                    return true;
-                case R.id.navigation_scan:
-                    mTextMessage.setText(R.string.title_scan);
-                    return true;
-                case R.id.navigation_settings:
-                    mTextMessage.setText(R.string.title_settings);
-                    return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -104,9 +83,9 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
+        session = Session.getInstance();
+
         mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         scanButton = findViewById(R.id.scanButton);
 
@@ -135,6 +114,7 @@ public class ScanActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                         else {
@@ -241,9 +221,11 @@ public class ScanActivity extends AppCompatActivity {
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Restaurant restaurant = snapshot.getValue(Restaurant.class);
                                 txtResult.setText("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
-
+                                System.out.println("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
                                 ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
                                 activeRestaurant.setRestaurant(restaurant);
+
+                                session.setTable(Integer.valueOf(table));
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
                                 startActivity(intent);
