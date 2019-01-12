@@ -3,6 +3,7 @@ package com.example.victorjuez.mywaiter.View;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.victorjuez.mywaiter.Model.User;
 import com.example.victorjuez.mywaiter.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
+    final DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
 
 
     @Override
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void registerUser() {
-        String email = emailEditText.getText().toString().trim();
+        final String email = emailEditText.getText().toString().trim();
         String password = passwdEditText.getText().toString().trim();
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
@@ -87,12 +90,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             //user is successfully registered and logged in
-                            Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, ScanActivity.class);
-                            startActivity(intent);
+                            String userId = usersRef.push().getKey();
+                            User user = new User(email, userId);
+                            usersRef.child(userId).setValue(user, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                    if(databaseError!=null) Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_LONG).show();
+
+                                    else{
+                                        Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }
+                            });
                         }
                         else Toast.makeText(getApplicationContext(), "Authentication failed." + task.getException(),
-                                Toast.LENGTH_LONG).show();;
+                                Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -116,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if(task.isSuccessful()){
                             //user is successfully registered and logged in
                             Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                             startActivity(intent);
                         }
