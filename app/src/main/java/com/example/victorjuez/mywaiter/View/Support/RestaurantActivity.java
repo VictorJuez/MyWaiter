@@ -110,4 +110,8 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
         return loadFragment(fragment);
     }
+
+    public void reloadRating(){
+        ratingBar.setRating(activeRestaurant.getRestaurant().rating());
+    }
 }

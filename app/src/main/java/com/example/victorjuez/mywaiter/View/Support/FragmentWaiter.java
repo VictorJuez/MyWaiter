@@ -59,6 +59,7 @@ public class FragmentWaiter extends Fragment {
                 //restaurantRef.push().setValue(rating); //random generated key
                 activeRestaurant.getRestaurant().addVote((int) rating);
                 session.setRestaurantRate((int)rating);
+                ((RestaurantActivity)getActivity()).reloadRating();
             }
         });
 
