@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
+import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Support.RestaurantActivity;
 import com.google.android.gms.vision.CameraSource;
@@ -44,6 +45,7 @@ public class ScanActivity extends AppCompatActivity {
     TextView txtResult;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
+    Session session;
     final int RequestCameraPermissionID = 1001;
 
     DatabaseReference dbRestaurants;
@@ -80,6 +82,8 @@ public class ScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+
+        session = Session.getInstance();
 
         mTextMessage = (TextView) findViewById(R.id.message);
 
@@ -217,9 +221,11 @@ public class ScanActivity extends AppCompatActivity {
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Restaurant restaurant = snapshot.getValue(Restaurant.class);
                                 txtResult.setText("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
-
+                                System.out.println("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
                                 ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
                                 activeRestaurant.setRestaurant(restaurant);
+
+                                session.setTable(Integer.valueOf(table));
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
                                 startActivity(intent);

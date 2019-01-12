@@ -19,6 +19,7 @@ import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
 import com.example.victorjuez.mywaiter.Model.CartItem;
 import com.example.victorjuez.mywaiter.Model.Order;
 import com.example.victorjuez.mywaiter.Model.Plate;
+import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Carta.RecyclerTouchListener;
 import com.example.victorjuez.mywaiter.View.PlateActivity;
@@ -38,6 +39,7 @@ public class CheckoutActivity extends AppCompatActivity {
     ShoppingCartController shoppingCartController;
     PlateController plateController;
     ActiveRestaurant activeRestaurant;
+    Session session;
 
     RecyclerView recyclerView;
     CheckoutAdapter checkoutAdapter;
@@ -69,6 +71,7 @@ public class CheckoutActivity extends AppCompatActivity {
         shoppingCartController = ShoppingCartController.getInstance();
         plateController = PlateController.getInstance();
         activeRestaurant = ActiveRestaurant.getInstance();
+        session = Session.getInstance();
 
         recyclerView = findViewById(R.id.recyclerCheckout);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -122,7 +125,7 @@ public class CheckoutActivity extends AppCompatActivity {
                         plates.put(String.valueOf(cartItem.getPlate().id), cartItem.getQty());
                     }
                     String id = ordersRef.push().getKey();
-                    Order order = new Order(id, "1", activeRestaurant.getRestaurant().id, plates);
+                    Order order = new Order(id, session.getCurrentUser().id, activeRestaurant.getRestaurant().id, session.getTable(),plates);
                     ordersRef.child(id).setValue(order, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {

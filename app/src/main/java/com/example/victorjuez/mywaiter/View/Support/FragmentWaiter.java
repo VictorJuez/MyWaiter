@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,6 +22,7 @@ public class FragmentWaiter extends Fragment {
 
     private RatingBar ratingBar;
     private ActiveRestaurant activeRestaurant;
+    private Session session;
 
     @Nullable
     @Override
@@ -29,16 +31,18 @@ public class FragmentWaiter extends Fragment {
 
         ratingBar = view.findViewById(R.id.ratingBar);
         activeRestaurant = ActiveRestaurant.getInstance();
+        session = Session.getInstance();
         final DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+activeRestaurant.getRestaurant().id+"/votes");
 
+        ratingBar.setRating(session.getRestaurantRate());
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 Toast.makeText(getActivity(), "Rating is: "+rating, Toast.LENGTH_SHORT).show();
-                //restaurantRef.child("1").setValue(rating); //child num would be user id
-                restaurantRef.push().setValue(rating);
+                restaurantRef.child(session.getCurrentUser().id).setValue(rating); //child num would be user id
+                //restaurantRef.push().setValue(rating); //random generated key
                 activeRestaurant.getRestaurant().addVote((int) rating);
-
+                session.setRestaurantRate((int)rating);
             }
         });
 

@@ -5,6 +5,7 @@ public class Session {
 
     private User CurrentUser;
     private int restaurantRate;
+    private int table;
 
     public static Session getInstance() {
         return ourInstance;
@@ -28,5 +29,13 @@ public class Session {
 
     public void setRestaurantRate(int restaurantRate) {
         this.restaurantRate = restaurantRate;
+    }
+
+    public int getTable() {
+        return table;
+    }
+
+    public void setTable(int table) {
+        this.table = table;
     }
 }
