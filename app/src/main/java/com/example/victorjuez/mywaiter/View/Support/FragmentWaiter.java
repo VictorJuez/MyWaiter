@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
 import com.example.victorjuez.mywaiter.Model.Session;
+import com.example.victorjuez.mywaiter.Model.WaiterCall;
 import com.example.victorjuez.mywaiter.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,6 +26,8 @@ public class FragmentWaiter extends Fragment {
     private ActiveRestaurant activeRestaurant;
     private Session session;
 
+    private LinearLayout linearLayoutWaiter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +37,18 @@ public class FragmentWaiter extends Fragment {
         activeRestaurant = ActiveRestaurant.getInstance();
         session = Session.getInstance();
         final DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+activeRestaurant.getRestaurant().id+"/votes");
+        linearLayoutWaiter = view.findViewById(R.id.linearLayoutWaiter);
+
+        linearLayoutWaiter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference waiterRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+activeRestaurant.getRestaurant().id+"/waiterCall");
+                Long tsLong = System.currentTimeMillis()/1000;
+                String timeStamp = tsLong.toString();
+                waiterRef.push().setValue(new WaiterCall(session.getCurrentUser().id,session.getTable(), timeStamp));
+                Toast.makeText(getActivity(), "A waiter has been called!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         ratingBar.setRating(session.getRestaurantRate());
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayoutWaiter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF"
