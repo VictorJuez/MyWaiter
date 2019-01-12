@@ -26,6 +26,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     private TextView mTextMessage;
     private ImageView restaurantProfileImage;
     private LinearLayout ratingLayout;
+    private RatingBar ratingBar;
     private FirebaseStorage storage;
 
     private ActiveRestaurant activeRestaurant;
@@ -39,6 +40,11 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
         mTextMessage = (TextView) findViewById(R.id.message);
         restaurantProfileImage = findViewById(R.id.restaurantProfileImage);
         ratingLayout = findViewById(R.id.ratingLayout);
+        ratingBar = findViewById(R.id.ratingBar);
+
+        activeRestaurant = ActiveRestaurant.getInstance();
+
+        ratingBar.setRating(activeRestaurant.getRestaurant().rating());
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -48,7 +54,6 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
 
         //load restaurant image
-        activeRestaurant = ActiveRestaurant.getInstance();
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(activeRestaurant.getRestaurant().id)+"/profilePhoto.png");

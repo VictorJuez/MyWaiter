@@ -1,6 +1,7 @@
 package com.example.victorjuez.mywaiter.Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Restaurant {
     public String name;
@@ -11,11 +12,12 @@ public class Restaurant {
     public int id;
     public ArrayList<String> tags;
     public ArrayList<Integer> plates;
+    public HashMap<String,Integer> votes;
 
     public Restaurant() {
     }
 
-    public Restaurant(String name, String address, String email, String description, String telephone, int id, ArrayList<String> tags, ArrayList<Integer> plates) {
+    public Restaurant(String name, String address, String email, String description, String telephone, int id, ArrayList<String> tags, ArrayList<Integer> plates, HashMap<String, Integer> votes) {
         this.name = name;
         this.address = address;
         this.email = email;
@@ -24,5 +26,20 @@ public class Restaurant {
         this.id = id;
         this.tags = tags;
         this.plates = plates;
+        this.votes = votes;
+    }
+
+    public int rating() {
+        int totalRate = 0;
+        if(votes == null) return 0;
+        for(int rate : votes.values()){
+            totalRate+=rate;
+        }
+        totalRate = totalRate/votes.size();
+        return totalRate;
+    }
+
+    public void addVote(int value){
+        votes.put("user",value);
     }
 }
