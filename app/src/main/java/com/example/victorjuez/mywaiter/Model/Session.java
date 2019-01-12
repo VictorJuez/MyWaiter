@@ -11,6 +11,7 @@ public class Session {
     }
 
     private Session() {
+        restaurantRate=0;
     }
 
     public User getCurrentUser() {
