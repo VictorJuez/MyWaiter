@@ -76,7 +76,7 @@ public class CheckoutActivity extends AppCompatActivity {
         checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
         recyclerView.setAdapter(checkoutAdapter);
         totalPrice = findViewById(R.id.totalPrice);
-        totalPrice.setText(String.valueOf(shoppingCartController.getTotalPrice())+"€");
+        totalPrice.setText(String.valueOf(shoppingCartController.getTotalPriceCart())+"€");
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -102,7 +102,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
                 recyclerView.setAdapter(checkoutAdapter);
                 totalPrice = findViewById(R.id.totalPrice);
-                totalPrice.setText(String.valueOf(shoppingCartController.getTotalPrice())+"€");
+                totalPrice.setText(String.valueOf(shoppingCartController.getTotalPriceCart())+"€");
 
                 finish();
             }
@@ -130,8 +130,11 @@ public class CheckoutActivity extends AppCompatActivity {
                                 System.out.println("Data could not be saved. " + databaseError.getMessage());
                             } else {
                                 Toast.makeText(getApplicationContext(), "Order Confirmed", Toast.LENGTH_SHORT).show();
+                                shoppingCartController.makeOrder();
+                                shoppingCartController.empty();
                                 Intent intent = new Intent(CheckoutActivity.this, RestaurantActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     });

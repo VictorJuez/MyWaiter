@@ -11,6 +11,7 @@ public class ShoppingCartController {
     private static final ShoppingCartController ourInstance = new ShoppingCartController();
 
     private ArrayList<CartItem> cart;
+    private ArrayList<CartItem> ordered;
 
     public static ShoppingCartController getInstance() {
         return ourInstance;
@@ -18,6 +19,7 @@ public class ShoppingCartController {
 
     private ShoppingCartController() {
         cart = new ArrayList<>();
+        ordered = new ArrayList<>();
     }
 
     public void addToCart(Plate plate, int qty){
@@ -54,10 +56,18 @@ public class ShoppingCartController {
         return ids;
     }
 
-    public int getTotalPrice() {
+    public int getTotalPriceCart() {
         int totalPrice = 0;
         for(CartItem cartItem : cart){
             totalPrice+=cartItem.getPlate().price*cartItem.getQty();
+        }
+        return totalPrice;
+    }
+
+    public int getTotalPriceOrdered(){
+        int totalPrice = 0;
+        for(CartItem orderItem : ordered){
+            totalPrice+=orderItem.getPlate().price*orderItem.getQty();
         }
         return totalPrice;
     }
@@ -73,7 +83,23 @@ public class ShoppingCartController {
     }
 
     public void removePlate(Plate plate){
-        CartItem cartItem = cart.get(cart.indexOf(new CartItem(plate, 0)));
         cart.remove(new CartItem(plate, 0));
+    }
+
+    public void makeOrder() {
+        if(ordered.isEmpty()) ordered = cart;
+        else{
+            for(CartItem cartItem : cart){
+                if(ordered.contains(cartItem)){
+                    CartItem orderedItem = ordered.get(ordered.indexOf(cartItem));
+                    ordered.get(ordered.indexOf(cartItem)).setQty(orderedItem.getQty()+cartItem.getQty());
+                }
+                else ordered.add(cartItem);
+            }
+        }
+    }
+
+    public ArrayList<CartItem> getOrdered() {
+        return ordered;
     }
 }
