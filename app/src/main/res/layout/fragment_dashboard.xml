@@ -10,7 +10,10 @@
         android:id="@+id/tagsLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_margin="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         android:background="#FFF"
         android:elevation="4dp"
         android:padding="10dp">

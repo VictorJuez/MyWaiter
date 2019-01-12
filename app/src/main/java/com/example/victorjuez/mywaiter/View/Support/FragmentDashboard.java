@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
@@ -24,6 +25,7 @@ public class FragmentDashboard extends Fragment {
     private TextView restaurantAddress;
     private TextView restaurantDescription;
     private TextView tag0, tag1, tag2;
+    private RatingBar ratingBar;
 
     @Nullable
     @Override

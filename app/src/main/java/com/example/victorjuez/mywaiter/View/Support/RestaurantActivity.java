@@ -7,7 +7,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
@@ -22,6 +25,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
     private TextView mTextMessage;
     private ImageView restaurantProfileImage;
+    private LinearLayout ratingLayout;
     private FirebaseStorage storage;
 
     private ActiveRestaurant activeRestaurant;
@@ -34,6 +38,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
         mTextMessage = (TextView) findViewById(R.id.message);
         restaurantProfileImage = findViewById(R.id.restaurantProfileImage);
+        ratingLayout = findViewById(R.id.ratingLayout);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -80,6 +85,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         Fragment fragment = null;
+        ratingLayout.setVisibility(View.GONE);
 
         switch (menuItem.getItemId()){
 
@@ -89,6 +95,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
 
             case R.id.navigation_dashboard:
                 fragment = new FragmentDashboard();
+                ratingLayout.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.navigation_waiter:
