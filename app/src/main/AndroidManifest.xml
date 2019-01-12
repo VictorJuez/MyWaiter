@@ -39,7 +39,8 @@
 
         <activity
             android:name=".View.Support.RestaurantActivity"
-            android:label="@string/title_activity_support"></activity>
+            android:label="@string/title_activity_support" />
+        <activity android:name=".View.RegisterActivity"></activity>
     </application>
 
 </manifest>
