@@ -32,55 +32,55 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CheckoutActivity extends AppCompatActivity {
-    //TODO: [Layout] make empty cart button floating
+public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener {
+    //Controllers
+    private ShoppingCartController shoppingCartController;
+    private PlateController plateController;
+    private ActiveRestaurant activeRestaurant;
+    private Session session;
 
-    Button emptyCartButton, orderButton;
-    ShoppingCartController shoppingCartController;
-    PlateController plateController;
-    ActiveRestaurant activeRestaurant;
-    Session session;
+    //Views
+    private Button emptyCartButton, orderButton;
+    private RecyclerView recyclerView;
+    private CheckoutAdapter checkoutAdapter;
+    private TextView totalPrice;
+    private Toolbar toolbar;
 
-    RecyclerView recyclerView;
-    CheckoutAdapter checkoutAdapter;
-    TextView totalPrice;
-
-    DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
+    private DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_checkout);
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(getApplicationContext(),RestaurantActivity.class));
-                finish();
-            }
-        });
-
-        //checkoutCartText = findViewById(R.id.checkout_cart_text);
+        //Views
         emptyCartButton = findViewById(R.id.empty_cart_button);
         orderButton = findViewById(R.id.order_button);
+        recyclerView = findViewById(R.id.recyclerCheckout);
+        totalPrice = findViewById(R.id.totalPrice);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_checkout);
 
+        //Controllers
         shoppingCartController = ShoppingCartController.getInstance();
         plateController = PlateController.getInstance();
         activeRestaurant = ActiveRestaurant.getInstance();
         session = Session.getInstance();
 
-        recyclerView = findViewById(R.id.recyclerCheckout);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-        checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
-        recyclerView.setAdapter(checkoutAdapter);
-        totalPrice = findViewById(R.id.totalPrice);
         totalPrice.setText(String.valueOf(shoppingCartController.getTotalPriceCart())+"€");
 
+        //recyclerView configuration
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
+        recyclerView.setAdapter(checkoutAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -98,9 +98,14 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         }));
 
-        emptyCartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        emptyCartButton.setOnClickListener(this);
+        orderButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.empty_cart_button:
                 shoppingCartController.empty();
                 checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
                 recyclerView.setAdapter(checkoutAdapter);
@@ -108,18 +113,13 @@ public class CheckoutActivity extends AppCompatActivity {
                 totalPrice.setText(String.valueOf(shoppingCartController.getTotalPriceCart())+"€");
 
                 finish();
-            }
-        });
+                break;
 
-        orderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+            case R.id.order_button:
                 ArrayList<CartItem> cart = shoppingCartController.getCart();
                 if (cart.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Nothing to order!", Toast.LENGTH_SHORT).show();
                 } else {
-
                     Map<String, Integer> plates = new HashMap<>();
                     for (CartItem cartItem : cart) {
                         plates.put(String.valueOf(cartItem.getPlate().id), cartItem.getQty());
@@ -142,7 +142,8 @@ public class CheckoutActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
-        });
+                break;
+        }
+
     }
 }
