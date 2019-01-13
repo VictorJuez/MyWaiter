@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
@@ -27,7 +27,6 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -48,7 +47,7 @@ public class ScanActivity extends AppCompatActivity {
 
     //Controllers
     private Session session;
-    private ActiveRestaurant activeRestaurant;
+    private RestaurantController restaurantController;
 
     private final int RequestCameraPermissionID = 1001;
     private boolean found = false;
@@ -86,7 +85,7 @@ public class ScanActivity extends AppCompatActivity {
 
         //Controllers
         session = Session.getInstance();
-        activeRestaurant = ActiveRestaurant.getInstance();
+        restaurantController = RestaurantController.getInstance();
 
         //Views
         scanButton = findViewById(R.id.scanButton);
@@ -194,7 +193,7 @@ public class ScanActivity extends AppCompatActivity {
                                 Restaurant restaurant = snapshot.getValue(Restaurant.class);
                                 System.out.println("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
 
-                                activeRestaurant.setRestaurant(restaurant);
+                                restaurantController.setRestaurant(restaurant);
                                 session.setTable(Integer.valueOf(table));
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);

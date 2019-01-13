@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Controller.PlateController;
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
 import com.example.victorjuez.mywaiter.Model.CartItem;
@@ -36,7 +36,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     //Controllers
     private ShoppingCartController shoppingCartController;
     private PlateController plateController;
-    private ActiveRestaurant activeRestaurant;
+    private RestaurantController restaurantController;
     private Session session;
 
     //Views
@@ -63,7 +63,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         //Controllers
         shoppingCartController = ShoppingCartController.getInstance();
         plateController = PlateController.getInstance();
-        activeRestaurant = ActiveRestaurant.getInstance();
+        restaurantController = RestaurantController.getInstance();
         session = Session.getInstance();
 
         setSupportActionBar(toolbar);
@@ -125,7 +125,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                         plates.put(String.valueOf(cartItem.getPlate().id), cartItem.getQty());
                     }
                     String id = ordersRef.push().getKey();
-                    Order order = new Order(id, session.getCurrentUser().id, activeRestaurant.getRestaurant().id, session.getTable(),plates);
+                    Order order = new Order(id, session.getCurrentUser().id, restaurantController.getRestaurant().id, session.getTable(),plates);
                     ordersRef.child(id).setValue(order, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {

@@ -2,11 +2,11 @@ package com.example.victorjuez.mywaiter.Controller;
 
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 
-public class ActiveRestaurant {
-    private static final ActiveRestaurant ourInstance = new ActiveRestaurant();
+public class RestaurantController {
+    private static final RestaurantController ourInstance = new RestaurantController();
     private Restaurant restaurant;
 
-    public static ActiveRestaurant getInstance() {
+    public static RestaurantController getInstance() {
         return ourInstance;
     }
     public void setRestaurant(Restaurant restaurant){
@@ -17,6 +17,6 @@ public class ActiveRestaurant {
         return this.restaurant;
     }
 
-    private ActiveRestaurant() {
+    private RestaurantController() {
     }
 }

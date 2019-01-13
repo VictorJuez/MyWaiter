@@ -9,10 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Carta.CartaActivity;
@@ -49,7 +48,7 @@ public class FragmentDashboard extends Fragment {
         tag1 = view.findViewById(R.id.tag1);
         tag2 = view.findViewById(R.id.tag2);
 
-        Restaurant restaurant = ActiveRestaurant.getInstance().getRestaurant();
+        Restaurant restaurant = RestaurantController.getInstance().getRestaurant();
 
         restaurantTelephone.setText(restaurant.telephone);
         restaurantEmail.setText(restaurant.email);

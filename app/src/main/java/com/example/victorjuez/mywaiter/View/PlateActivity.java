@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Controller.PlateController;
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
 import com.example.victorjuez.mywaiter.Model.CartItem;
@@ -30,7 +30,7 @@ public class PlateActivity extends AppCompatActivity implements View.OnClickList
     //Controllers
     private PlateController plateController;
     private Restaurant selectedRestaurant;
-    private ActiveRestaurant activeRestaurant;
+    private RestaurantController restaurantController;
     private ShoppingCartController shoppingCartController;
 
     //Views
@@ -68,14 +68,14 @@ public class PlateActivity extends AppCompatActivity implements View.OnClickList
         removeFromCartButton.setOnClickListener(this);
 
         //Controllers
-        activeRestaurant = ActiveRestaurant.getInstance();
+        restaurantController = RestaurantController.getInstance();
         shoppingCartController = ShoppingCartController.getInstance();
         plateController = PlateController.getInstance();
         storage = FirebaseStorage.getInstance();
 
         //Main
         selectedPlate = plateController.getSelectedPlate();
-        selectedRestaurant = activeRestaurant.getRestaurant();
+        selectedRestaurant = restaurantController.getRestaurant();
 
         plateNameView.setText(selectedPlate.name);
         descriptionPlateView.setText(selectedPlate.description);

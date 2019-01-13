@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Controller.PlateController;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
@@ -80,7 +80,7 @@ public class CartaFragment extends Fragment {
         DatabaseReference platesReference = FirebaseDatabase.getInstance().getReference("Plates");
         Query query = platesReference
                 .orderByChild("restaurant")
-                .equalTo(ActiveRestaurant.getInstance().getRestaurant().id);
+                .equalTo(RestaurantController.getInstance().getRestaurant().id);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -93,7 +93,6 @@ public class CartaFragment extends Fragment {
                             platesId.add(plate.id);
                         }
                     }
-                    plateController.setPlateList((ArrayList<Plate>) plateList);
                     pAdapter.notifyDataSetChanged();
                 }
                 else {

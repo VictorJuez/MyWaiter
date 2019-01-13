@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,7 +23,7 @@ import java.util.List;
 public class PlateAdapter extends RecyclerView.Adapter<PlateAdapter.MyViewHolder> {
 
     private List<Plate> platosList;
-    private ActiveRestaurant activeRestaurant;
+    private RestaurantController restaurantController;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView nombre, precio, ingredients;
@@ -58,11 +58,11 @@ public class PlateAdapter extends RecyclerView.Adapter<PlateAdapter.MyViewHolder
         holder.ingredients.setText(plate.ingredients);
         holder.precio.setText(String.valueOf(plate.price)+"€");
 
-        activeRestaurant = ActiveRestaurant.getInstance();
+        restaurantController = RestaurantController.getInstance();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-        StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(activeRestaurant.getRestaurant().id)+"/plates/"+plate.id+"/"+"list.png");
+        StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(restaurantController.getRestaurant().id)+"/plates/"+plate.id+"/"+"list.png");
 
         restaurantImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

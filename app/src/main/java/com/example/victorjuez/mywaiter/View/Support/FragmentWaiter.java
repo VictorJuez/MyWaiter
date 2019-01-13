@@ -11,19 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.Model.WaiterCall;
 import com.example.victorjuez.mywaiter.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-
 public class FragmentWaiter extends Fragment {
 
     private RatingBar ratingBar;
-    private ActiveRestaurant activeRestaurant;
+    private RestaurantController restaurantController;
     private Session session;
 
     private LinearLayout linearLayoutWaiter;
@@ -34,15 +32,15 @@ public class FragmentWaiter extends Fragment {
         View view = inflater.inflate(R.layout.fragment_waiter, null);
 
         ratingBar = view.findViewById(R.id.ratingBar);
-        activeRestaurant = ActiveRestaurant.getInstance();
+        restaurantController = RestaurantController.getInstance();
         session = Session.getInstance();
-        final DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+activeRestaurant.getRestaurant().id+"/votes");
+        final DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+ restaurantController.getRestaurant().id+"/votes");
         linearLayoutWaiter = view.findViewById(R.id.linearLayoutWaiter);
 
         linearLayoutWaiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference waiterRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+activeRestaurant.getRestaurant().id+"/waiterCall");
+                DatabaseReference waiterRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+ restaurantController.getRestaurant().id+"/waiterCall");
                 Long tsLong = System.currentTimeMillis()/1000;
                 String timeStamp = tsLong.toString();
                 waiterRef.push().setValue(new WaiterCall(session.getCurrentUser().id,session.getTable(), timeStamp));
@@ -57,7 +55,7 @@ public class FragmentWaiter extends Fragment {
                 Toast.makeText(getActivity(), "Rating is: "+rating, Toast.LENGTH_SHORT).show();
                 restaurantRef.child(session.getCurrentUser().id).setValue(rating); //child num would be user id
                 //restaurantRef.push().setValue(rating); //random generated key
-                activeRestaurant.getRestaurant().addVote((int) rating);
+                restaurantController.getRestaurant().addVote((int) rating);
                 session.setRestaurantRate((int)rating);
                 ((RestaurantActivity)getActivity()).reloadRating();
             }

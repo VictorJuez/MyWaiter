@@ -11,9 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,7 +28,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     private FirebaseStorage storage;
 
     //Controllers
-    private ActiveRestaurant activeRestaurant;
+    private RestaurantController restaurantController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +41,11 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
         ratingBar = findViewById(R.id.ratingBar);
 
         //Controllers
-        activeRestaurant = ActiveRestaurant.getInstance();
+        restaurantController = RestaurantController.getInstance();
         storage = FirebaseStorage.getInstance();
 
         //Main
-        ratingBar.setRating(activeRestaurant.getRestaurant().rating());
+        ratingBar.setRating(restaurantController.getRestaurant().rating());
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
@@ -61,7 +60,7 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     private void loadRestaurantImage() {
         //load restaurant image
         StorageReference storageReference = storage.getReference();
-        StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(activeRestaurant.getRestaurant().id)+"/profilePhoto.png");
+        StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(restaurantController.getRestaurant().id)+"/profilePhoto.png");
         restaurantImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -116,6 +115,6 @@ public class RestaurantActivity extends AppCompatActivity implements BottomNavig
     }
 
     public void reloadRating(){
-        ratingBar.setRating(activeRestaurant.getRestaurant().rating());
+        ratingBar.setRating(restaurantController.getRestaurant().rating());
     }
 }
