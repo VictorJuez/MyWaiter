@@ -37,19 +37,21 @@ import org.json.*;
 import java.io.IOException;
 
 public class ScanActivity extends AppCompatActivity {
+    //Views
     private Button scanButton;
+    private SurfaceView cameraPreview;
+    private TextView txtResult;
 
-    SurfaceView cameraPreview;
-    TextView txtResult;
-    BarcodeDetector barcodeDetector;
-    CameraSource cameraSource;
+    //Qr elements
+    private BarcodeDetector barcodeDetector;
+    private CameraSource cameraSource;
 
     //Controllers
-    Session session;
-    ActiveRestaurant activeRestaurant;
-
-    final int RequestCameraPermissionID = 1001;
-    boolean found = false;
+    private Session session;
+    private ActiveRestaurant activeRestaurant;
+    
+    private final int RequestCameraPermissionID = 1001;
+    private boolean found = false;
 
 
     @Override
@@ -91,7 +93,7 @@ public class ScanActivity extends AppCompatActivity {
         txtResult = findViewById(R.id.txtResult);
 
         qrSetup();
-        
+
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
