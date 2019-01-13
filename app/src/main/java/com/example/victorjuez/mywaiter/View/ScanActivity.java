@@ -37,19 +37,18 @@ import org.json.*;
 import java.io.IOException;
 
 public class ScanActivity extends AppCompatActivity {
-
-    private TextView mTextMessage;
     private Button scanButton;
 
     SurfaceView cameraPreview;
     TextView txtResult;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
+
+    //Controllers
     Session session;
+    ActiveRestaurant activeRestaurant;
+
     final int RequestCameraPermissionID = 1001;
-
-    DatabaseReference dbRestaurants;
-
     boolean found = false;
 
 
@@ -83,57 +82,26 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
+        //Controllers
         session = Session.getInstance();
+        activeRestaurant = ActiveRestaurant.getInstance();
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-
+        //Views
         scanButton = findViewById(R.id.scanButton);
+        txtResult = findViewById(R.id.txtResult);
 
+        qrSetup();
+        
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //in case to wrong reading qr code, to try again
-                //found = false;
-
-                //switch to restaurant information screen
-
-                Query query = FirebaseDatabase.getInstance().getReference("Restaurants")
-                        .orderByChild("id")
-                        .equalTo(2);
-
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
-                            //TODO: only one restaurant received, refactor the for clause
-                            for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                Restaurant restaurant = snapshot.getValue(Restaurant.class);
-
-                                ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
-                                activeRestaurant.setRestaurant(restaurant);
-
-                                Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                        else {
-                            System.out.println("This restaurant doesn't exists");
-                            txtResult.setText("This restaurant doesn't exists");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+                found = false;
             }
         });
+    }
 
-        cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
-        txtResult = findViewById(R.id.txtResult);
-
+    private void qrSetup() {
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
@@ -143,6 +111,7 @@ public class ScanActivity extends AppCompatActivity {
                 .setRequestedPreviewSize(640, 480)
                 .build();
 
+        cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
         cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -208,7 +177,8 @@ public class ScanActivity extends AppCompatActivity {
             if(obj.getJSONObject("mywaiter") != null){
                 final int restaurantId = obj.getJSONObject("mywaiter").getInt("id");
                 final String table = obj.getJSONObject("mywaiter").getString("table");
-                txtResult.setText("Restaurant="+restaurantId+"\n"+"Table="+table);
+
+                //Connecting to FirebaseDatabase
                 Query query = FirebaseDatabase.getInstance().getReference("Restaurants")
                         .orderByChild("id")
                         .equalTo(restaurantId);
@@ -220,11 +190,9 @@ public class ScanActivity extends AppCompatActivity {
                             //TODO: only one restaurant received, refactor the for clause
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Restaurant restaurant = snapshot.getValue(Restaurant.class);
-                                txtResult.setText("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
                                 System.out.println("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
-                                ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
-                                activeRestaurant.setRestaurant(restaurant);
 
+                                activeRestaurant.setRestaurant(restaurant);
                                 session.setTable(Integer.valueOf(table));
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
