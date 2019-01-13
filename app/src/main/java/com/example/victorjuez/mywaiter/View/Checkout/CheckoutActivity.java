@@ -106,7 +106,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.empty_cart_button:
-                shoppingCartController.empty();
+                shoppingCartController.emptyCart();
                 checkoutAdapter = new CheckoutAdapter(shoppingCartController.getCart());
                 recyclerView.setAdapter(checkoutAdapter);
                 totalPrice = findViewById(R.id.totalPrice);
@@ -134,7 +134,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                             } else {
                                 Toast.makeText(getApplicationContext(), "Order Confirmed", Toast.LENGTH_SHORT).show();
                                 shoppingCartController.makeOrder();
-                                shoppingCartController.empty();
+                                shoppingCartController.emptyCart();
                                 Intent intent = new Intent(CheckoutActivity.this, RestaurantActivity.class);
                                 startActivity(intent);
                                 finish();

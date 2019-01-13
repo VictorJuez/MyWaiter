@@ -13,10 +13,6 @@ public class PlateController {
         return ourInstance;
     }
 
-    public ArrayList<Plate> getPlateList() {
-        return plateList;
-    }
-
     public void setPlateList(ArrayList<Plate> plateList) {
         this.plateList = plateList;
     }

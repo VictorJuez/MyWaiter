@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ShoppingCartController {
-    //TODO: create Model class cart with attributes plate and attribute qty;
     private static final ShoppingCartController ourInstance = new ShoppingCartController();
 
     private ArrayList<CartItem> cart;
@@ -34,23 +33,22 @@ public class ShoppingCartController {
         logPrint();
     }
 
+    public void removeFromCart(Plate plate){
+        cart.remove(new CartItem(plate, 0));
+    }
+
     public ArrayList<CartItem> getCart() {
         return cart;
     }
 
-    public ArrayList<Integer> getPlatesID(){
+    public ArrayList<CartItem> getOrdered() {
+        return ordered;
+    }
+
+    public ArrayList<Integer> getPlatesCartID(){
         ArrayList<Integer> ids = new ArrayList<>();
         for(CartItem cartItem : cart){
           ids.add(cartItem.getPlate().id);
-        }
-
-        return ids;
-    }
-
-    public ArrayList<Integer> getPlatesQty(){
-        ArrayList<Integer> ids = new ArrayList<>();
-        for(CartItem cartItem : cart){
-            ids.add(cartItem.getQty());
         }
 
         return ids;
@@ -78,12 +76,8 @@ public class ShoppingCartController {
         }
     }
 
-    public void empty(){
+    public void emptyCart(){
         cart = new ArrayList<>();
-    }
-
-    public void removePlate(Plate plate){
-        cart.remove(new CartItem(plate, 0));
     }
 
     public void makeOrder() {
@@ -97,9 +91,5 @@ public class ShoppingCartController {
                 else ordered.add(cartItem);
             }
         }
-    }
-
-    public ArrayList<CartItem> getOrdered() {
-        return ordered;
     }
 }

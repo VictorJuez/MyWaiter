@@ -85,7 +85,7 @@ public class PlateActivity extends AppCompatActivity implements View.OnClickList
         loadPlateImage();
 
         //Check and act if is new plate to be added to cart or an Update situation
-        if(shoppingCartController.getPlatesID().contains(plateController.getSelectedPlate().id)) updateState = true;
+        if(shoppingCartController.getPlatesCartID().contains(plateController.getSelectedPlate().id)) updateState = true;
         if(updateState){
             platesNum.setText(String.valueOf(shoppingCartController.getCart().get(shoppingCartController.getCart().indexOf(new CartItem(plateController.getSelectedPlate(),1))).getQty()));
             removeFromCartButton.setVisibility(View.VISIBLE);
@@ -140,7 +140,7 @@ public class PlateActivity extends AppCompatActivity implements View.OnClickList
                 else Toast.makeText(PlateActivity.this, "Can't be ordered 0 plates", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.remove_cart_button:
-                shoppingCartController.removePlate(plateController.getSelectedPlate());
+                shoppingCartController.removeFromCart(plateController.getSelectedPlate());
                 finish();
                 break;
 
