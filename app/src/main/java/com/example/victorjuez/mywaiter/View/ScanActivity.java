@@ -49,7 +49,7 @@ public class ScanActivity extends AppCompatActivity {
     //Controllers
     private Session session;
     private ActiveRestaurant activeRestaurant;
-    
+
     private final int RequestCameraPermissionID = 1001;
     private boolean found = false;
 

@@ -35,15 +35,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    //Views
     private Button loginButton;
     private EditText emailEditText, passwdEditText;
     private ProgressDialog progressDialog;
-    private Session session;
     private TextView registerTextView;
 
+    //Controllers
+    private Session session;
+
     private FirebaseAuth firebaseAuth;
-    final DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
 
 
     @Override
