@@ -25,7 +25,6 @@ public class FragmentDashboard extends Fragment {
     private TextView restaurantAddress;
     private TextView restaurantDescription;
     private TextView tag0, tag1, tag2;
-    private RatingBar ratingBar;
 
     @Nullable
     @Override

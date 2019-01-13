@@ -22,42 +22,46 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class RestaurantActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-    private TextView mTextMessage;
+    //Views
     private ImageView restaurantProfileImage;
     private LinearLayout ratingLayout;
     private RatingBar ratingBar;
     private FirebaseStorage storage;
 
+    //Controllers
     private ActiveRestaurant activeRestaurant;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        //Views
         restaurantProfileImage = findViewById(R.id.restaurantProfileImage);
         ratingLayout = findViewById(R.id.ratingLayout);
         ratingBar = findViewById(R.id.ratingBar);
 
+        //Controllers
         activeRestaurant = ActiveRestaurant.getInstance();
+        storage = FirebaseStorage.getInstance();
 
+        //Main
         ratingBar.setRating(activeRestaurant.getRestaurant().rating());
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-        navigation.setSelectedItemId(R.id.navigation_dashboard);
 
+        //Selecting starting fragment to display.
+        navigation.setSelectedItemId(R.id.navigation_dashboard);
         loadFragment(new FragmentDashboard());
 
+        loadRestaurantImage();
+    }
 
+    private void loadRestaurantImage() {
         //load restaurant image
-        storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(activeRestaurant.getRestaurant().id)+"/profilePhoto.png");
-
         restaurantImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
