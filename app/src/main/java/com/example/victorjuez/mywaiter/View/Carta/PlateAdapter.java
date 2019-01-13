@@ -31,9 +31,9 @@ public class PlateAdapter extends RecyclerView.Adapter<PlateAdapter.MyViewHolder
 
         public MyViewHolder(View view) {
             super(view);
-            nombre = (TextView) view.findViewById(R.id.name);
-            ingredients = (TextView) view.findViewById(R.id.ingredients);
-            precio = (TextView) view.findViewById(R.id.price);
+            nombre = view.findViewById(R.id.name);
+            ingredients = view.findViewById(R.id.ingredients);
+            precio =  view.findViewById(R.id.price);
             image = view.findViewById(R.id.photo_plate);
         }
     }

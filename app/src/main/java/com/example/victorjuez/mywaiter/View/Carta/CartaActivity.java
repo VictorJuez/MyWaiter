@@ -22,66 +22,42 @@ import com.example.victorjuez.mywaiter.View.Checkout.CheckoutActivity;
 import java.util.ArrayList;
 
 public class CartaActivity extends AppCompatActivity{
-
-    //TODO: refactor
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    //Views
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    private Button toolbar;
-
-    private Button continue_btn;
-
-    private ArrayList<onTabSelected> listeners;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+    private Button continue_btn;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carta);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        listeners = new ArrayList<onTabSelected>(3);
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
+        tabLayout = findViewById(R.id.tabs);
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(getApplicationContext(),RestaurantActivity.class));
                 finish();
             }
         });
 
         continue_btn = findViewById(R.id.continue_button);
-
         continue_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,28 +65,6 @@ public class CartaActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                listeners.get(i).setPlates(i);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
-
-    }
-
-    public void setListener(onTabSelected listener){
-        this.listeners.add(listener);
     }
 
     @Override
@@ -135,10 +89,7 @@ public class CartaActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -148,22 +99,18 @@ public class CartaActivity extends AppCompatActivity{
         @Override
         //it creates the fragment in case it's not catched or created
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
             CartaFragment cartaFragment = new CartaFragment();
             switch (position){
                 case 0:
                     cartaFragment.setPage(0);
-                    setListener(cartaFragment);
                     return cartaFragment;
 
                 case 1:
                     cartaFragment.setPage(1);
-                    setListener(cartaFragment);
                     return cartaFragment;
 
                 case 2:
                     cartaFragment.setPage(2);
-                    setListener(cartaFragment);
                     return cartaFragment;
             }
             return null;
@@ -176,8 +123,4 @@ public class CartaActivity extends AppCompatActivity{
         }
     }
 
-    public interface onTabSelected{
-        void helloWorld();
-        void setPlates(int plateSet);
-    }
 }

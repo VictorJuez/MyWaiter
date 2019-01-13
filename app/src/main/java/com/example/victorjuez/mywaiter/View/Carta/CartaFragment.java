@@ -1,7 +1,5 @@
 package com.example.victorjuez.mywaiter.View.Carta;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,33 +26,26 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaFragment extends Fragment implements CartaActivity.onTabSelected{
-
-    Activity activity;
-
-    private List<Plate> plateList = new ArrayList<>();
+public class CartaFragment extends Fragment {
+    //Controllers
     private PlateController plateController;
+
+    //Views
     private RecyclerView recyclerView;
+
+    //Variables
+    private List<Plate> plateList = new ArrayList<>();
     private PlateAdapter pAdapter;
     private ArrayList<Integer> platesId = new ArrayList<>();
     private int page;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof Activity){
-            activity=(Activity) context;
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_carta, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
+        //Configuring recyclerview
+        recyclerView = rootView.findViewById(R.id.recycler_view);
         pAdapter = new PlateAdapter(plateList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -66,7 +57,6 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
             @Override
             public void onClick(View view, int position) {
                 Plate plate = plateList.get(position);
-                //Toast.makeText(getContext(),plate.getName() + " is selected!", Toast.LENGTH_SHORT).show();
                 plateController.setSelectedPlate(plate);
                 Intent intent = new Intent(getActivity(), PlateActivity.class);
                 startActivity(intent);
@@ -78,13 +68,14 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
             }
         }));
 
+        //Loading plates given the tab
         plateController = PlateController.getInstance();
-        preparePlatoData();
+        preparePlateData();
 
         return rootView;
     }
 
-    private void preparePlatoData() {
+    private void preparePlateData() {
         //TODO: make more efficient communication with DB, we are loading all plates for each fragment and discarding the ones we don't want to show.
         DatabaseReference platesReference = FirebaseDatabase.getInstance().getReference("Plates");
         Query query = platesReference
@@ -117,35 +108,8 @@ public class CartaFragment extends Fragment implements CartaActivity.onTabSelect
         });
     }
 
-    private void printPlates() {
-        for(Plate plate : plateList){
-            System.out.print(plate.name);
-            System.out.println();
-        }
-    }
-
-    public static CartaFragment newInstance(int someInt) {
-        CartaFragment myFragment = new CartaFragment();
-
-        Bundle args = new Bundle();
-        args.putInt("page", someInt);
-        myFragment.setArguments(args);
-
-        return myFragment;
-    }
-
     public void setPage(int page) {
         this.page = page;
     }
 
-    @Override
-    public void helloWorld() {
-        plateList.add(plateController.getPlateList().get(0));
-        pAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void setPlates(int plateSet) {
-        
-    }
 }
