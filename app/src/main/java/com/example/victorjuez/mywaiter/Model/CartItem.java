@@ -9,11 +9,6 @@ public class CartItem {
         this.qty = qty;
     }
 
-    public void incrementQty(){
-        ++this.qty;
-        return;
-    }
-
     public Plate getPlate() {
         return plate;
     }
