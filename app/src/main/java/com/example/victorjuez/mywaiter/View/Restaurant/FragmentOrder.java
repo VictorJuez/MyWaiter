@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.Carta.CartaActivity;
+import com.example.victorjuez.mywaiter.View.Cart.CartActivity;
 import com.example.victorjuez.mywaiter.View.Checkout.CheckoutAdapter;
 
 public class FragmentOrder extends Fragment {
@@ -53,7 +53,7 @@ public class FragmentOrder extends Fragment {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CartaActivity.class);
+                Intent intent = new Intent(getActivity(), CartActivity.class);
                 startActivity(intent);
             }
         });

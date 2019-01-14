@@ -1,11 +1,9 @@
-package com.example.victorjuez.mywaiter.View.Carta;
+package com.example.victorjuez.mywaiter.View.Cart;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;

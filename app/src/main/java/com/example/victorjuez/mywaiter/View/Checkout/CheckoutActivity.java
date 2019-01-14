@@ -21,7 +21,7 @@ import com.example.victorjuez.mywaiter.Model.Order;
 import com.example.victorjuez.mywaiter.Model.Plate;
 import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.Carta.RecyclerTouchListener;
+import com.example.victorjuez.mywaiter.View.Cart.RecyclerTouchListener;
 import com.example.victorjuez.mywaiter.View.PlateActivity;
 import com.example.victorjuez.mywaiter.View.Restaurant.RestaurantActivity;
 import com.google.firebase.database.DatabaseError;

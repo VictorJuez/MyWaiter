@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter.View.Carta;
+package com.example.victorjuez.mywaiter.View.Cart;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaFragment extends Fragment {
+public class CartFragment extends Fragment {
     //Controllers
     private PlateController plateController;
 

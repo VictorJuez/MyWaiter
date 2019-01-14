@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter.View.Carta;
+package com.example.victorjuez.mywaiter.View.Cart;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

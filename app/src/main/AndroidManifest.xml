@@ -23,7 +23,7 @@
             android:name=".View.ScanActivity"
             android:label="@string/title_activity_scan" />
         <activity
-            android:name=".View.Carta.CartaActivity"
+            android:name=".View.Cart.CartActivity"
             android:label="@string/title_activity_carta"
             android:theme="@style/AppTheme">
             <meta-data

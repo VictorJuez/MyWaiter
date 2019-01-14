@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter.View.Carta;
+package com.example.victorjuez.mywaiter.View.Cart;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

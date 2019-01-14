@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter.View.Carta;
+package com.example.victorjuez.mywaiter.View.Cart;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -19,9 +19,7 @@ import android.widget.Button;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Checkout.CheckoutActivity;
 
-import java.util.ArrayList;
-
-public class CartaActivity extends AppCompatActivity{
+public class CartActivity extends AppCompatActivity{
     //Views
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -61,7 +59,7 @@ public class CartaActivity extends AppCompatActivity{
         continue_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartaActivity.this, CheckoutActivity.class);
+                Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
                 startActivity(intent);
             }
         });
@@ -99,19 +97,19 @@ public class CartaActivity extends AppCompatActivity{
         @Override
         //it creates the fragment in case it's not catched or created
         public Fragment getItem(int position) {
-            CartaFragment cartaFragment = new CartaFragment();
+            CartFragment cartFragment = new CartFragment();
             switch (position){
                 case 0:
-                    cartaFragment.setPage(0);
-                    return cartaFragment;
+                    cartFragment.setPage(0);
+                    return cartFragment;
 
                 case 1:
-                    cartaFragment.setPage(1);
-                    return cartaFragment;
+                    cartFragment.setPage(1);
+                    return cartFragment;
 
                 case 2:
-                    cartaFragment.setPage(2);
-                    return cartaFragment;
+                    cartFragment.setPage(2);
+                    return cartFragment;
             }
             return null;
         }
