@@ -20,7 +20,7 @@ import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.Support.RestaurantActivity;
+import com.example.victorjuez.mywaiter.View.Restaurant.RestaurantActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;

@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     //Views
     private Button loginButton;
     private EditText emailEditText, passwdEditText;
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loginUser();
         }
         else if (v == registerTextView){
-            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
     }
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                             Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
 
-                                            Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+                                            Intent intent = new Intent(LoginActivity.this, ScanActivity.class);
                                             startActivity(intent);
                                         }
                                     }

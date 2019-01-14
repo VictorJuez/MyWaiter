@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter.View.Support;
+package com.example.victorjuez.mywaiter.View.Restaurant;
 
 import android.net.Uri;
 import android.os.Bundle;
