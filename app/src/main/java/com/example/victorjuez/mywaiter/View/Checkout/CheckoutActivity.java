@@ -46,8 +46,6 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     private TextView totalPrice;
     private Toolbar toolbar;
 
-    private DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +122,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                     for (CartItem cartItem : cart) {
                         plates.put(String.valueOf(cartItem.getPlate().id), cartItem.getQty());
                     }
+                    DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Restaurants/"+restaurantController.getRestaurant().id+"/orders");
                     String id = ordersRef.push().getKey();
                     Order order = new Order(id, session.getCurrentUser().id, restaurantController.getRestaurant().id, session.getTable(),plates);
                     ordersRef.child(id).setValue(order, new DatabaseReference.CompletionListener() {
