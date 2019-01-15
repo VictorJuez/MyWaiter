@@ -98,11 +98,11 @@
     <string name="action_settings">Settings</string>
     <string name="restaurant_description">L’excel.lència en un platet, els sentits en una copa de vi, la sorpresa en un delicat postre, el plaer de ser mimat, el teu temps, el teu record, a partir d’avui, el teu restaurant.</string>
     <string name="title_activity_carta">CartaActivity</string>
-    <string name="tab_text_1">Primeros</string>
-    <string name="tab_text_2">Segundos</string>
-    <string name="tab_text_3">Postres</string>
+    <string name="tab_text_1">Starters</string>
+    <string name="tab_text_2">Main Courses</string>
+    <string name="tab_text_3">Desserts</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="carta_name">Carta</string>
+    <string name="carta_name">Menu</string>
     <string name="result_text_default">Please focus camera to QR Code</string>
     <string name="title_activity_support">SupportActivity</string>
     <string name="title_home">Home</string>

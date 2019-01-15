@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter.View.Cart;
+package com.example.victorjuez.mywaiter.View.Menu;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -19,7 +19,7 @@ import android.widget.Button;
 import com.example.victorjuez.mywaiter.R;
 import com.example.victorjuez.mywaiter.View.Checkout.CheckoutActivity;
 
-public class CartActivity extends AppCompatActivity{
+public class MenuActivity extends AppCompatActivity{
     //Views
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -59,7 +59,7 @@ public class CartActivity extends AppCompatActivity{
         continue_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
+                Intent intent = new Intent(MenuActivity.this, CheckoutActivity.class);
                 startActivity(intent);
             }
         });
@@ -97,19 +97,19 @@ public class CartActivity extends AppCompatActivity{
         @Override
         //it creates the fragment in case it's not catched or created
         public Fragment getItem(int position) {
-            CartFragment cartFragment = new CartFragment();
+            MenuFragment menuFragment = new MenuFragment();
             switch (position){
                 case 0:
-                    cartFragment.setPage(0);
-                    return cartFragment;
+                    menuFragment.setPage(0);
+                    return menuFragment;
 
                 case 1:
-                    cartFragment.setPage(1);
-                    return cartFragment;
+                    menuFragment.setPage(1);
+                    return menuFragment;
 
                 case 2:
-                    cartFragment.setPage(2);
-                    return cartFragment;
+                    menuFragment.setPage(2);
+                    return menuFragment;
             }
             return null;
         }

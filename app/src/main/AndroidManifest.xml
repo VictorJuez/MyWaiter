@@ -23,7 +23,7 @@
             android:name=".View.ScanActivity"
             android:label="@string/title_activity_scan" />
         <activity
-            android:name=".View.Cart.CartActivity"
+            android:name=".View.Menu.MenuActivity"
             android:label="@string/title_activity_carta"
             android:theme="@style/AppTheme">
             <meta-data

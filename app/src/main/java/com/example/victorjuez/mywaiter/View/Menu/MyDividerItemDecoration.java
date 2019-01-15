@@ -1,4 +1,4 @@
-package com.example.victorjuez.mywaiter.View.Cart;
+package com.example.victorjuez.mywaiter.View.Menu;
 
 import android.content.Context;
 import android.content.res.Resources;

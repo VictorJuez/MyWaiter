@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.Cart.CartActivity;
+import com.example.victorjuez.mywaiter.View.Menu.MenuActivity;
 
 public class FragmentDashboard extends Fragment {
 
@@ -35,7 +35,7 @@ public class FragmentDashboard extends Fragment {
         verCartaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CartActivity.class);
+                Intent intent = new Intent(getActivity(), MenuActivity.class);
                 startActivity(intent);
             }
         });
