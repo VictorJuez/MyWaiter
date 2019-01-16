@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Controller.PlateController;
 import com.example.victorjuez.mywaiter.Controller.ShoppingCartController;
 import com.example.victorjuez.mywaiter.Model.CartItem;
@@ -26,11 +26,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class PlateActivity extends AppCompatActivity {
-
+public class PlateActivity extends AppCompatActivity implements View.OnClickListener {
+    //Controllers
     private PlateController plateController;
-    private Plate selectedPlate;
+    private Restaurant selectedRestaurant;
+    private RestaurantController restaurantController;
+    private ShoppingCartController shoppingCartController;
 
+    //Views
     private TextView plateNameView;
     private TextView descriptionPlateView;
     private TextView platePriceView;
@@ -39,44 +42,59 @@ public class PlateActivity extends AppCompatActivity {
     private Button addToCartButton, removeFromCartButton;
     private TextView platesNum;
 
-    private Restaurant selectedRestaurant;
-    private ActiveRestaurant activeRestaurant;
-    private ShoppingCartController shoppingCartController;
-
+    //Variables
+    private Plate selectedPlate;
     private boolean updateState;
-
-    FirebaseStorage storage;
+    private FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plate);
 
-        activeRestaurant = ActiveRestaurant.getInstance();
-        selectedRestaurant = activeRestaurant.getRestaurant();
-
-        shoppingCartController = ShoppingCartController.getInstance();
-
+        //Views
         plateNameView = findViewById(R.id.plate_name);
         descriptionPlateView = findViewById(R.id.description_plate_text);
         platePriceView = findViewById(R.id.plate_price);
         plateDetailedView = findViewById(R.id.plate_detailed);
-        addButton = findViewById(R.id.add_button);
-        removeButton = findViewById(R.id.remove_button);
         platesNum = findViewById(R.id.tv_platesNum);
+        addButton = findViewById(R.id.add_button);
+        addButton.setOnClickListener(this);
+        removeButton = findViewById(R.id.remove_button);
+        removeButton.setOnClickListener(this);
         addToCartButton = findViewById(R.id.addToCart_button);
+        addToCartButton.setOnClickListener(this);
         removeFromCartButton = findViewById(R.id.remove_cart_button);
+        removeFromCartButton.setOnClickListener(this);
 
+        //Controllers
+        restaurantController = RestaurantController.getInstance();
+        shoppingCartController = ShoppingCartController.getInstance();
         plateController = PlateController.getInstance();
+        storage = FirebaseStorage.getInstance();
+
+        //Main
         selectedPlate = plateController.getSelectedPlate();
+        selectedRestaurant = restaurantController.getRestaurant();
 
         plateNameView.setText(selectedPlate.name);
         descriptionPlateView.setText(selectedPlate.description);
         platePriceView.setText(String.valueOf(selectedPlate.price)+"€");
 
         updateState = false;
+        loadPlateImage();
 
-        storage = FirebaseStorage.getInstance();
+        //Check and act if is new plate to be added to cart or an Update situation
+        if(shoppingCartController.getPlatesCartID().contains(plateController.getSelectedPlate().id)) updateState = true;
+        if(updateState){
+            platesNum.setText(String.valueOf(shoppingCartController.getCart().get(shoppingCartController.getCart().indexOf(new CartItem(plateController.getSelectedPlate(),1))).getQty()));
+            removeFromCartButton.setVisibility(View.VISIBLE);
+            addToCartButton.setText("UPDATE CART");
+        }
+    }
+
+    private void loadPlateImage() {
+        //load image from Firebase Storage
         StorageReference storageReference = storage.getReference();
         StorageReference restaurantImageReference = storageReference.child("restaurants/"+String.valueOf(selectedRestaurant.id)+"/plates/"+selectedPlate.id+"/"+"detailed.png");
 
@@ -95,34 +113,20 @@ public class PlateActivity extends AppCompatActivity {
                 System.out.println("failed to load image");
             }
         });
+    }
 
-        if(shoppingCartController.getPlatesID().contains(plateController.getSelectedPlate().id)) updateState = true;
-
-        if(updateState){
-            platesNum.setText(String.valueOf(shoppingCartController.getCart().get(shoppingCartController.getCart().indexOf(new CartItem(plateController.getSelectedPlate(),1))).getQty()));
-            removeFromCartButton.setVisibility(View.VISIBLE);
-            addToCartButton.setText("UPDATE CART");
-        }
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.add_button:
                 int n = Integer.valueOf((String)platesNum.getText());
                 platesNum.setText(String.valueOf(n+1));
-            }
-        });
-
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int n = Integer.valueOf((String)platesNum.getText());
+                break;
+            case R.id.remove_button:
+                n = Integer.valueOf((String)platesNum.getText());
                 if(n>0)platesNum.setText(String.valueOf(n-1));
-            }
-        });
-
-        addToCartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.addToCart_button:
                 int numPlates = Integer.valueOf((String)platesNum.getText());
                 if(numPlates > 0) {
                     shoppingCartController.addToCart(selectedPlate, numPlates);
@@ -134,15 +138,12 @@ public class PlateActivity extends AppCompatActivity {
                     finish();
                 }
                 else Toast.makeText(PlateActivity.this, "Can't be ordered 0 plates", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        removeFromCartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shoppingCartController.removePlate(plateController.getSelectedPlate());
+                break;
+            case R.id.remove_cart_button:
+                shoppingCartController.removeFromCart(plateController.getSelectedPlate());
                 finish();
-            }
-        });
+                break;
+
+        }
     }
 }

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".View.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +23,7 @@
             android:name=".View.ScanActivity"
             android:label="@string/title_activity_scan" />
         <activity
-            android:name=".View.Carta.CartaActivity"
+            android:name=".View.Menu.MenuActivity"
             android:label="@string/title_activity_carta"
             android:theme="@style/AppTheme">
             <meta-data
@@ -38,7 +38,7 @@
             android:value="barcode" />
 
         <activity
-            android:name=".View.Support.RestaurantActivity"
+            android:name=".View.Restaurant.RestaurantActivity"
             android:label="@string/title_activity_support" />
         <activity android:name=".View.RegisterActivity"></activity>
     </application>

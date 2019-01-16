@@ -29,6 +29,10 @@ public class Restaurant {
         this.votes = votes;
     }
 
+    /**
+     * Given all the votes of the restaurant calculates the average rate.
+     * @return the average rate of the restaurant.
+     */
     public int rating() {
         int totalRate = 0;
         if(votes == null) return 0;
@@ -39,6 +43,10 @@ public class Restaurant {
         return totalRate;
     }
 
+    /**
+     * Adds a vote to the restaurant.
+     * @param value the rate willing to be added as a vote.
+     */
     public void addVote(int value){
         votes.put("user",value);
     }

@@ -16,18 +16,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.victorjuez.mywaiter.Controller.ActiveRestaurant;
+import com.example.victorjuez.mywaiter.Controller.RestaurantController;
 import com.example.victorjuez.mywaiter.Model.Restaurant;
 import com.example.victorjuez.mywaiter.Model.Session;
 import com.example.victorjuez.mywaiter.R;
-import com.example.victorjuez.mywaiter.View.Support.RestaurantActivity;
+import com.example.victorjuez.mywaiter.View.Restaurant.RestaurantActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -37,20 +36,21 @@ import org.json.*;
 import java.io.IOException;
 
 public class ScanActivity extends AppCompatActivity {
-
-    private TextView mTextMessage;
+    //Views
     private Button scanButton;
+    private SurfaceView cameraPreview;
+    private TextView txtResult;
 
-    SurfaceView cameraPreview;
-    TextView txtResult;
-    BarcodeDetector barcodeDetector;
-    CameraSource cameraSource;
-    Session session;
-    final int RequestCameraPermissionID = 1001;
+    //Qr elements
+    private BarcodeDetector barcodeDetector;
+    private CameraSource cameraSource;
 
-    DatabaseReference dbRestaurants;
+    //Controllers
+    private Session session;
+    private RestaurantController restaurantController;
 
-    boolean found = false;
+    private final int RequestCameraPermissionID = 1001;
+    private boolean found = false;
 
 
     @Override
@@ -83,57 +83,26 @@ public class ScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
+        //Controllers
         session = Session.getInstance();
+        restaurantController = RestaurantController.getInstance();
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-
+        //Views
         scanButton = findViewById(R.id.scanButton);
+        txtResult = findViewById(R.id.txtResult);
+
+        qrSetup();
 
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //in case to wrong reading qr code, to try again
-                //found = false;
-
-                //switch to restaurant information screen
-
-                Query query = FirebaseDatabase.getInstance().getReference("Restaurants")
-                        .orderByChild("id")
-                        .equalTo(2);
-
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
-                            //TODO: only one restaurant received, refactor the for clause
-                            for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                Restaurant restaurant = snapshot.getValue(Restaurant.class);
-
-                                ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
-                                activeRestaurant.setRestaurant(restaurant);
-
-                                Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                        else {
-                            System.out.println("This restaurant doesn't exists");
-                            txtResult.setText("This restaurant doesn't exists");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+                found = false;
             }
         });
+    }
 
-        cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
-        txtResult = findViewById(R.id.txtResult);
-
+    private void qrSetup() {
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
@@ -143,6 +112,7 @@ public class ScanActivity extends AppCompatActivity {
                 .setRequestedPreviewSize(640, 480)
                 .build();
 
+        cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
         cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -208,7 +178,8 @@ public class ScanActivity extends AppCompatActivity {
             if(obj.getJSONObject("mywaiter") != null){
                 final int restaurantId = obj.getJSONObject("mywaiter").getInt("id");
                 final String table = obj.getJSONObject("mywaiter").getString("table");
-                txtResult.setText("Restaurant="+restaurantId+"\n"+"Table="+table);
+
+                //Connecting to FirebaseDatabase
                 Query query = FirebaseDatabase.getInstance().getReference("Restaurants")
                         .orderByChild("id")
                         .equalTo(restaurantId);
@@ -220,11 +191,9 @@ public class ScanActivity extends AppCompatActivity {
                             //TODO: only one restaurant received, refactor the for clause
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 Restaurant restaurant = snapshot.getValue(Restaurant.class);
-                                txtResult.setText("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
                                 System.out.println("Restaurant id="+restaurantId+"\n"+"Table="+table+"\n\n"+"Restaurant name="+restaurant.name+"\nAddress="+restaurant.address+"\n"+"telephone="+restaurant.telephone);
-                                ActiveRestaurant activeRestaurant = ActiveRestaurant.getInstance();
-                                activeRestaurant.setRestaurant(restaurant);
 
+                                restaurantController.setRestaurant(restaurant);
                                 session.setTable(Integer.valueOf(table));
 
                                 Intent intent = new Intent(ScanActivity.this, RestaurantActivity.class);

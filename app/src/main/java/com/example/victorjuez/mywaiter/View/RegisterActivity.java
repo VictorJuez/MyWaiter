@@ -24,33 +24,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private Button loginButton, registerButton;
+    //Views
+    private Button registerButton;
     private EditText emailET, email2ET, psswd2ET, psswdET;
     private ProgressDialog progressDialog;
+
     private Session session;
 
     private FirebaseAuth firebaseAuth;
-    final DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+    private final DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        //Controllers
         firebaseAuth = FirebaseAuth.getInstance();
+        session = Session.getInstance();
 
-        loginButton = findViewById(R.id.loginButton);
+        //Views
         registerButton = findViewById(R.id.registerButton);
         emailET = findViewById(R.id.email);
         email2ET = findViewById(R.id.email2);
         psswdET = findViewById(R.id.password);
         psswd2ET = findViewById(R.id.password2);
 
-        session = Session.getInstance();
-
+        //Main
         progressDialog = new ProgressDialog(this);
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void registerUser() {
         final String email = emailET.getText().toString().trim();
@@ -97,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //user is successfully registered and logged in
                             String userId = usersRef.push().getKey();
                             final User user = new User(email, userId);
+                            //user stored to db separately to FirebaseAuth
                             usersRef.child(userId).setValue(user, new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {

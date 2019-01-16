@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Cart"
+            android:text="Menu"
             android:textColor="@color/colorWhite"/>
 
     </LinearLayout>
