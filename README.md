@@ -16,6 +16,6 @@ An Android Application which its main functionality is to order food when user i
 - How a full stack Mobile App looks like
 
 ## Screenshots
-![](/DOC/screenshots/restaurant_menu.png)
+![](/docs/screenshots/restaurant_menu.png)
 
-![](/DOC/screenshots/detail_cart.png)
+![](/docs/screenshots/detail_cart.png)
